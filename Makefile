@@ -24,8 +24,8 @@ all: $(NAME)
 
 $(NAME): $(S_OBJ) $(MLXLIB)
 	@echo "$(CLRCY)Подключение$(CLRPR)$(LIBFT)$(CLRRS)"	
-	@echo "$(CLRCY)Подключение$(CLRPR)$(MLXLIB)$(CLRRS)"	
-	@$(CC) $(LIBFT) $(MLXFLAGS) $(S_OBJ) -o $@
+	@echo "$(CLRCY)Подключение$(CLRPR)$(MLXLIB)$(CLRRS)"
+	@$(CC) $(LIBFT) -I $(MLXFLAGS) $(S_OBJ) -o $@
 	@echo "$(CLRCY)Создан$(CLREL)$@$(CLRRS)"
 
 $(OBJDIR)/%.o: %.c | $(OBJDIR) $(DEPDIR)
