@@ -9,7 +9,7 @@ HEDER	:= *.h
 
 
 MLXLIB		= mlx/libmlx.dylib
-MLXFLAGS	= $(MLXLIB) -framework OpenGL -framework AppKit
+MLXFLAGS	= $(MLXLIB) -lmlx -framework OpenGL -framework AppKit
 
 S_SRC	:= $(wildcard *.c)
 
@@ -23,9 +23,9 @@ DEPFLAGS = -MT $@ -MMD -MP -MF $(DEPDIR)/$*.d
 all: $(NAME)
 
 $(NAME): $(S_OBJ) $(MLXLIB)
-	@echo "$(CLRCY)Подключение$(CLRPR)$(LIBFT)$(CLRRS)"	
-	@echo "$(CLRCY)Подключение$(CLRPR)$(MLXLIB)$(CLRRS)"
 	@$(CC) $(LIBFT) -I $(MLXFLAGS) $(S_OBJ) -o $@
+	@echo "$(CLRCY)Подключен$(CLRPR)$(LIBFT)$(CLRRS)"
+	@echo "$(CLRCY)Подключен$(CLRPR)$(MLXLIB)$(CLRRS)"
 	@echo "$(CLRCY)Создан$(CLREL)$@$(CLRRS)"
 
 $(OBJDIR)/%.o: %.c | $(OBJDIR) $(DEPDIR)
@@ -62,6 +62,9 @@ gitpush: fclean
 	git push
 
 .PHONY: all clean fclean re
+
+
+
 
 #-c говорит не запускать линкер, потому что нет main
 #-g порождает отладочную информацию в родном формате операционной системы
