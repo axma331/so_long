@@ -13,17 +13,17 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
 	*(unsigned int*)dst = color;
 }
+
 int	key_hook(int keycode, t_data *vars)
 {
-	printf("Hello from key_hook!\n");
+	return(printf("Hello from key_hook!\n"));
 }
 
 int main(int argc, char **argv)
 {
+	t_struct s;
 	t_data img;
-	t_vars vars;
-	void *mlx_ptr;
-	void *win_ptr;
+	// s.img = (t_data *)malloc(sizeof(t_data));
 	int x = 800;
 	int y = 600;
 	int color = 0x00009999;
@@ -35,30 +35,22 @@ int main(int argc, char **argv)
 	buff[sizeof(buff) - 1] = '\0';
 	printf ("%s", buff);
 	
-	mlx_ptr = mlx_init();
-	win_ptr = mlx_new_window(mlx_ptr, x, y, "so_long"); /*Запуск окна*/
-
-	img.img = mlx_new_image(mlx_ptr, x, y);
+	s.mlx_ptr = mlx_init();
+	s.win_ptr = mlx_new_window(s.mlx_ptr, x, y, "so_long"); /*Запуск окна*/
+	s.img = &img;
+	s.img->img_ptr = mlx_new_image(s.mlx_ptr, x, y);
 	int i = 5;
 	int j = 5;
-	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
+	s.img->addr = mlx_get_data_addr(s.img->img_ptr, &s.img->bits_per_pixel, &s.img->line_length, &s.img->endian);
 	while(++i < x - 5)
 	{
-		my_mlx_pixel_put(&img, i, j, color);
+		my_mlx_pixel_put(s.img, i, j, color);
 		if (i == x - 6 && ++j < y - 5)
 			i = 5;
 	}
-	mlx_put_image_to_window(mlx_ptr,win_ptr, img.img, 0, 0);
-	mlx_string_put(mlx_ptr, win_ptr, 5, 5, color<<2*8, "string");
-	mlx_loop(mlx_ptr);
-
-	// mlx_ptr = mlx_init();
-	// vars.mlx_ptr = mlx_init();
-	// vars.win_ptr = mlx_new_window(mlx_ptr, x, y, "so_long"); /*Запуск окна*/
-	// mlx_key_hook(vars.win_ptr, key_hook, &vars);
-	// mlx_loop(vars.mlx_ptr);
-
-
-	// printf("%s , %d, %d, %d", img.img, img.bits_per_pixel, img.line_length, img.endian);
+	mlx_put_image_to_window(s.mlx_ptr,s.win_ptr, s.img->img_ptr, 0, 0);
+	mlx_key_hook(s.win_ptr, key_hook, &s);
+	mlx_string_put(s.mlx_ptr, s.win_ptr, 5, 5, color<<16, "string");
+	mlx_loop(s.mlx_ptr);
 	return (0);
 }

@@ -8,23 +8,18 @@
 
 typedef struct	s_data
 {
-	void *img;
+	void *img_ptr;
 	char *addr;
 	int	bits_per_pixel;
 	int	line_length;
 	int	endian;
 }				t_data;
 
-typedef struct	s_vars
+typedef struct	s_struct
 {
 	void *mlx_ptr;
 	void *win_ptr;
-}				t_vars;
-
-typedef struct	s_struct
-{
 	t_data *img;
-	t_vars *vars;
 }				t_struct;
 
 #endif
