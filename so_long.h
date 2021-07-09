@@ -15,8 +15,16 @@ typedef struct	s_data
 	int	endian;
 }				t_data;
 
+// typedef struct	s_map
+// {
+// 	unsigned int RGB;
+// 	int	endian;
+// }				t_map;
+
 typedef struct	s_struct
 {
+	int x;
+	int y;
 	void *mlx_ptr;
 	void *win_ptr;
 	t_data *img;
