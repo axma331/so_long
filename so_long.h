@@ -28,6 +28,7 @@ typedef struct	s_struct
 	void *mlx_ptr;
 	void *win_ptr;
 	t_data *img;
+	t_data *img_bord;
 }				t_struct;
 
 #endif
