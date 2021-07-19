@@ -14,6 +14,7 @@ int	closse(int keycode, t_struct *s)
 int main(int argc, char **argv)
 {
 	t_struct s;
+	ft_bzero (&s, sizeof(t_struct));
 	char **map;
 	// int y = 0;
 	// int x = 0;

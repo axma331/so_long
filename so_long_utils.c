@@ -33,20 +33,6 @@ char	**init_map(char **map)
 	return (map);
 }
 
-void	*init_mlx_new_or_xpm_file_to_image(t_struct *s, char *xpm_file, int width, int height)
-{
-	s->tmp = (t_xpm *)ft_calloc(1, sizeof (t_xpm));
-	if (!s->tmp)
-		ft_exit("memerr", 1);
-	if (!xpm_file)
-		s->tmp->ptr = mlx_new_image(s->mlx_ptr, width, height);
-	else
-		s->tmp->ptr = mlx_xpm_file_to_image(s->mlx_ptr, xpm_file, &s->tmp->width, &s->tmp->heigth);
-	s->tmp->addr = mlx_get_data_addr(s->tmp->ptr, &s->tmp->bits_per_pixel, &s->tmp->line_length, &s->tmp->endian);
-	printf("%d %p %d %d %d %d %d\n", (int)s->tmp->addr, s->tmp->ptr, s->tmp->bits_per_pixel, s->tmp->line_length, s->tmp->endian, s->tmp->width, s->tmp->heigth);
-	return (s->tmp);
-}
-
 void	*init_mlx_new_window(t_struct *s, char **map, char *xpm_file)
 {
 	int x;
@@ -69,64 +55,17 @@ void	*init_mlx_new_window(t_struct *s, char **map, char *xpm_file)
 	return (mlx_new_window(s->mlx_ptr, s->x, s->y, "so_long"));
 }
 
-void creat_floor(t_struct *s, int color)
+void	*init_mlx_new_or_xpm_file_to_image(t_struct *s, char *xpm_file, int width, int height)
 {
-	int t1;
-	int t2;
-
-	t1 = s->x_pos;
-	t2 = s->y_pos;
-	while(s->x_pos < t1 + s->wall->width)
-	{
-		my_mlx_pixel_put(s->tmp, s->x_pos, s->y_pos, color);
-		if (++s->x_pos == t1 + s->wall->width && ++s->y_pos)
-		{
-			if (s->y_pos == t2 + s->wall->heigth)
-			{
-				s->y_pos = t2;
-				printf("x: %3d|y: %d |x_pos: %3d|y_pos: %d\n", t1, t2, s->x_pos, s->y_pos);
-				break;
-			}
-			s->x_pos = t1;
-		}
-	}
-}
-
-void *create_background(t_struct *s, char **map, int x, int y, int color)
-{
-	x = 0;
-	y = 0;
-	int c = 9;
-
-	s->tmp = init_mlx_new_or_xpm_file_to_image(s, NULL, s->x, s->y);
-	printf("%d %p %d %d %d %d %d\n", (int)s->wall->addr, s->wall->ptr, s->wall->bits_per_pixel, s->wall->line_length, s->wall->endian, s->wall->width, s->wall->heigth);
-
-	while (map[y][x])
-	{
-		// printf("x1:%3d|y1:%d |x_pos: %3d|y_pos: %d\n", x, y, s->x_pos, s->y_pos);
-		if (map[y][x] == '1')
-		{
-			creat_floor(s, 0x00FF00FF);
-			x++;
-										// mlx_put_image_to_window(s->mlx_ptr, s->win_ptr, s->wall->ptr, s->wall->width * x, s->wall->heigth * y);
-		}
-		else if (map[y][x] == '0')
-		{
-			creat_floor(s, 0x000000FF);
-			x++;
-										// mlx_put_image_to_window(s->mlx_ptr, s->win_ptr, s->wall->ptr, s->wall->width * x, s->wall->heigth * y);
-		}
-		else
-			s->x_pos = ++x * s->wall->width;
-		if (!map[y][x])
-		{
-			x = 0;
-			s->x_pos = x * s->wall->width;
-			s->y_pos = ++y * s->wall->heigth;
-		}
-		
-	}
-	mlx_put_image_to_window(s->mlx_ptr, s->win_ptr, s->tmp->ptr, 0, 0);
+	s->tmp = (t_xpm *)ft_calloc(1, sizeof (t_xpm));
+	if (!s->tmp)
+		ft_exit("memerr", 1);
+	if (!xpm_file)
+		s->tmp->ptr = mlx_new_image(s->mlx_ptr, width, height);
+	else
+		s->tmp->ptr = mlx_xpm_file_to_image(s->mlx_ptr, xpm_file, &s->tmp->width, &s->tmp->heigth);
+	s->tmp->addr = mlx_get_data_addr(s->tmp->ptr, &s->tmp->bits_per_pixel, &s->tmp->line_length, &s->tmp->endian);
+	// printf("%d %p %d %d %d %d %d\n", (int)s->tmp->addr, s->tmp->ptr, s->tmp->bits_per_pixel, s->tmp->line_length, s->tmp->endian, s->tmp->width, s->tmp->heigth);
 	return (s->tmp);
 }
 
@@ -136,6 +75,90 @@ void	my_mlx_pixel_put(t_xpm *data, int x, int y, int color)
 
 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
 	*(unsigned int*)dst = color;
+}
+
+int	image_pixel_get(t_xpm *data, int x, int y)
+{
+	return (*(unsigned int*)(data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8))));
+}
+
+void creat_image(t_struct *s, t_xpm *img)
+{
+	int x = 0;
+	int y = 0;
+
+	while(x < s->wall->width)
+	{
+		my_mlx_pixel_put(s->tmp, x + s->x_pos, y + s->y_pos, image_pixel_get(s->wall, x, y));
+		printf("x: %3d|y: %d |x_pos: %3d|y_pos: %d\n", x, y, s->x_pos, s->y_pos);
+		if (++x == s->wall->width && ++y)
+		{
+			if (y == s->wall->heigth)
+			{
+				y = 0;
+				printf("x: %3d|y: %3d|x_pos: %3d|y_pos: %d\n", x, y, s->x_pos, s->y_pos);
+				break;
+			}
+			x = 0;
+		}
+	}
+}
+
+void creat_floor(t_struct *s, int color)
+{
+	int x = 0;
+	int y = 0;
+
+	// x = s->x_pos;
+	// y = s->y_pos;
+	while(x < s->wall->width)
+	{
+		my_mlx_pixel_put(s->tmp, x + s->x_pos, y + s->y_pos, color);
+		if (++x == s->wall->width && ++y)
+		{
+			if (y == s->wall->heigth)
+			{
+				y = 0;
+				printf("x: %3d|y: %3d|x_pos: %3d|y_pos: %d\n", x, y, s->x_pos, s->y_pos);
+				break;
+			}
+			x = 0;
+		}
+	}
+}
+
+void *create_background(t_struct *s, char **map, int x, int y, int color)
+{
+	x = 0;
+	y = 0;
+
+	s->tmp = init_mlx_new_or_xpm_file_to_image(s, NULL, s->x, s->y);
+	printf("%d %p %d %d %d %d %d\n", (int)s->wall->addr, s->wall->ptr, s->wall->bits_per_pixel, s->wall->line_length, s->wall->endian, s->wall->width, s->wall->heigth);
+
+	while (map[y][x])
+	{
+		if (map[y][x] == '1')
+		{
+			creat_image(s, s->wall);
+			s->x_pos = ++x * s->wall->width;
+			printf("i: %3d|j: %3d|x_pos: %3d|y_pos: %d\n", x, y, s->x_pos, s->y_pos);
+		}
+		else if (map[y][x] == '0')
+		{
+			creat_floor(s, 0x00FF0F04F);
+			s->x_pos = ++x * s->wall->width;
+		}
+		else
+			s->x_pos = ++x * s->wall->width;
+		if (!map[y][x])
+		{
+			x = 0;
+			s->x_pos = x * s->wall->width;
+			s->y_pos = ++y * s->wall->heigth;
+		}
+	}
+	mlx_put_image_to_window(s->mlx_ptr, s->win_ptr, s->tmp->ptr, 0, 0);
+	return (s->tmp);
 }
 
 // void *create_background(t_struct *s, int b_lt, int b_up, int color)

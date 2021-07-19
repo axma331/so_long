@@ -50,5 +50,6 @@ void	*init_mlx_new_window(t_struct *s, char **map, char *xpm_file);
 void	*create_background(t_struct *s, char **map, int b_lt, int b_up, int color);
 void	my_mlx_pixel_put(t_xpm *data, int x, int y, int color);
 void	creat_floor(t_struct *s, int color);
+int		image_pixel_get(t_xpm *data, int x, int y);
 
 #endif
