@@ -16,27 +16,16 @@ int main(int argc, char **argv)
 	t_struct s;
 	ft_bzero (&s, sizeof(t_struct));
 	char **map;
-	// int y = 0;
-	// int x = 0;
-	// int x_cnt = 0;
-	// int y_cnt = 0;
 
 	map = init_map(argv);
 	s.mlx_ptr = mlx_init();
 	s.win_ptr = init_mlx_new_window(&s, map, TREE);
+	init_xpm_images(&s);
 
 	s.background = create_background(&s, map, 0, 0, 0x00FF0000);
-	// while (map[y][x])
-	// {
-	// 	if (map[y][x] == '1')
-	// 		mlx_put_image_to_window(s.mlx_ptr, s.win_ptr, s.wall->ptr, s.wall->width * x, s.wall->heigth * y);
-	// 		x++;
-	// 	if (!map[y][x])
-	// 	{
-	// 		x = 0;
-	// 		y++;
-	// 	}
-	// }
+	mlx_put_image_to_window(s.mlx_ptr, s.win_ptr, s.background->ptr, 0, 0);
+
+	// mlx_loop_hook(s.mlx_ptr, )
 	mlx_loop(s.mlx_ptr);
 	return (0);
 }

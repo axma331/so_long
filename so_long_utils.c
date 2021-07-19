@@ -65,8 +65,14 @@ void	*init_mlx_new_or_xpm_file_to_image(t_struct *s, char *xpm_file, int width, 
 	else
 		s->tmp->ptr = mlx_xpm_file_to_image(s->mlx_ptr, xpm_file, &s->tmp->width, &s->tmp->heigth);
 	s->tmp->addr = mlx_get_data_addr(s->tmp->ptr, &s->tmp->bits_per_pixel, &s->tmp->line_length, &s->tmp->endian);
-	// printf("%d %p %d %d %d %d %d\n", (int)s->tmp->addr, s->tmp->ptr, s->tmp->bits_per_pixel, s->tmp->line_length, s->tmp->endian, s->tmp->width, s->tmp->heigth);
 	return (s->tmp);
+}
+void	init_xpm_images(t_struct *s)
+{
+
+	s->pleer = init_mlx_new_or_xpm_file_to_image(s, LION, 0, 0);
+	s->item = init_mlx_new_or_xpm_file_to_image(s, ITEM, 0, 0);
+	
 }
 
 void	my_mlx_pixel_put(t_xpm *data, int x, int y, int color)
@@ -82,21 +88,24 @@ int	image_pixel_get(t_xpm *data, int x, int y)
 	return (*(unsigned int*)(data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8))));
 }
 
-void creat_image(t_struct *s, t_xpm *img)
+void creat_image(t_struct *s, t_xpm *date)
 {
-	int x = 0;
-	int y = 0;
-
+	int x;
+	int y;
+	
+	x = 0;
+	y = 0;
 	while(x < s->wall->width)
 	{
-		my_mlx_pixel_put(s->tmp, x + s->x_pos, y + s->y_pos, image_pixel_get(s->wall, x, y));
-		printf("x: %3d|y: %d |x_pos: %3d|y_pos: %d\n", x, y, s->x_pos, s->y_pos);
+		if (!date)
+			my_mlx_pixel_put(s->tmp, x + s->x_pos, y + s->y_pos, CLR);
+		else
+			my_mlx_pixel_put(s->tmp, x + s->x_pos, y + s->y_pos, image_pixel_get(date, x, y));
 		if (++x == s->wall->width && ++y)
 		{
 			if (y == s->wall->heigth)
 			{
 				y = 0;
-				printf("x: %3d|y: %3d|x_pos: %3d|y_pos: %d\n", x, y, s->x_pos, s->y_pos);
 				break;
 			}
 			x = 0;
@@ -104,28 +113,6 @@ void creat_image(t_struct *s, t_xpm *img)
 	}
 }
 
-void creat_floor(t_struct *s, int color)
-{
-	int x = 0;
-	int y = 0;
-
-	// x = s->x_pos;
-	// y = s->y_pos;
-	while(x < s->wall->width)
-	{
-		my_mlx_pixel_put(s->tmp, x + s->x_pos, y + s->y_pos, color);
-		if (++x == s->wall->width && ++y)
-		{
-			if (y == s->wall->heigth)
-			{
-				y = 0;
-				printf("x: %3d|y: %3d|x_pos: %3d|y_pos: %d\n", x, y, s->x_pos, s->y_pos);
-				break;
-			}
-			x = 0;
-		}
-	}
-}
 
 void *create_background(t_struct *s, char **map, int x, int y, int color)
 {
@@ -143,9 +130,24 @@ void *create_background(t_struct *s, char **map, int x, int y, int color)
 			s->x_pos = ++x * s->wall->width;
 			printf("i: %3d|j: %3d|x_pos: %3d|y_pos: %d\n", x, y, s->x_pos, s->y_pos);
 		}
+		// else if (map[y][x] == 'P')
+		// {
+		// 	creat_image(s, s->pleer);
+		// 	s->x_pos = ++x * s->wall->width;
+		// }
+		// else if (map[y][x] == 'C')
+		// {
+		// 	creat_image(s, s->item);
+		// 	s->x_pos = ++x * s->wall->width;
+		// }
+		// else if (map[y][x] == 'E')
+		// {
+		// 	creat_image(s, s->item);
+		// 	s->x_pos = ++x * s->wall->width;
+		// }
 		else if (map[y][x] == '0')
 		{
-			creat_floor(s, 0x00FF0F04F);
+			creat_image(s, NULL);
 			s->x_pos = ++x * s->wall->width;
 		}
 		else
@@ -157,39 +159,6 @@ void *create_background(t_struct *s, char **map, int x, int y, int color)
 			s->y_pos = ++y * s->wall->heigth;
 		}
 	}
-	mlx_put_image_to_window(s->mlx_ptr, s->win_ptr, s->tmp->ptr, 0, 0);
+	// mlx_put_image_to_window(s->mlx_ptr, s->win_ptr, s->tmp->ptr, 0, 0);
 	return (s->tmp);
 }
-
-// void *create_background(t_struct *s, int b_lt, int b_up, int color)
-// {
-	// t_data *img;
-// 
-	// int b_rt;
-	// int b_dw;
-	// b_rt = b_lt;
-	// b_dw = b_up;
-	// img = (t_data *)malloc(sizeof(t_data));
-	// if (!img)
-	// 	ft_exit("background error", 1);
-	// img->img_ptr = mlx_new_image(s->mlx_ptr, s->x, s->y);
-	// img->addr = mlx_get_data_addr(img->img_ptr, &img->bits_per_pixel, &img->line_length, &img->endian);
-	// if ((b_lt > s->x/2) || (b_up > s->y/2))
-	// 	return (0);
-	// while(b_lt <= s->x - b_rt)
-	// {
-	// 	my_mlx_pixel_put(img, b_lt, b_up, color);
-	// 	if (b_lt == s->x - b_rt)
-	// 	{
-	// 		if (b_up == s->y - b_dw)
-	// 			break;
-	// 		b_up++;
-	// 		b_lt = b_rt;
-	// 	}
-	// 	else
-	// 		b_lt++;
-	// }
-	// mlx_put_image_to_window(s->mlx_ptr, s->win_ptr, img->img_ptr, 0, 0);
-	// free(img);
-	// return (img);
-// }
