@@ -28,7 +28,7 @@ $(NAME): $(S_OBJ) $(MLXLIB)
 	@echo "$(CLRCY)Подключен$(CLRPR)$(MLXLIB)$(CLRRS)"
 	@echo "$(CLRCY)Создан$(CLREL)$@$(CLRRS)"
 
-$(OBJDIR)/%.o: %.c | $(OBJDIR) $(DEPDIR)
+$(OBJDIR)/%.o: %.c | $(OBJDIR) $(DEPDIR) $(HEDER)
 	@$(MAKE) -C ../libft
 	@$(MAKE) -C ./mlx
 	@$(CC) $(CFLAGS) $(DEPFLAGS) -I $(MLXLIB) -c $< -o $@
