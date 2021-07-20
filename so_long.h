@@ -31,6 +31,8 @@ typedef struct	s_xpm
 	int	endian;
 	int	width;
 	int	heigth;
+	int x_pos; /*удалить*/
+	int y_pos; /*удалить*/
 }				t_xpm;
 
 typedef struct	s_struct
@@ -61,5 +63,6 @@ void	my_mlx_pixel_put(t_xpm *data, int x, int y, int color);
 int		image_pixel_get(t_xpm *data, int x, int y);
 void	creat_image(t_struct *s, t_xpm *dest, t_xpm *sorc, int color);
 void	init_xpm_images(t_struct *s);
+void	put_game(t_struct *s, char **map);
 
 #endif

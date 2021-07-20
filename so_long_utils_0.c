@@ -15,7 +15,6 @@ void	*init_mlx_xpm_file_to_img_or_new_img(t_struct *s, char *xpm_file, int width
 
 void	init_xpm_images(t_struct *s)
 {
-
 	s->wall = init_mlx_xpm_file_to_img_or_new_img(s, WALL, 0, 0);
 	s->player = init_mlx_xpm_file_to_img_or_new_img(s, PLAYER, 0, 0);
 	s->item = init_mlx_xpm_file_to_img_or_new_img(s, ITEM, 0, 0);
