@@ -16,6 +16,7 @@ int main(int argc, char **argv)
 	s.mlx_ptr = mlx_init();
 	init_xpm_images(&s);
 	s.win_ptr = init_mlx_new_window(&s);
+
 	create_background(&s);
 	mlx_put_image_to_window(s.mlx_ptr, s.win_ptr, s.background->ptr, 0, 0);
 	create_frontround(&s);

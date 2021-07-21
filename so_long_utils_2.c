@@ -79,15 +79,14 @@ void create_frontround(t_struct *s)
 	s->y_pos = 0;
 	while (s->map[y])
 	{
-		// if (s->map[y][x] == 'E')
-		// {
-		// 	creat_image(s, s->background, s->exit, 0);
-		// 	s->x_pos = ++x * s->exit->width;
-		// }
+		if (s->map[y][x] == 'E')
+		{
+			mlx_put_image_to_window(s->mlx_ptr, s->win_ptr, s->exit->ptr, s->x_pos, s->y_pos);
+			s->x_pos = ++x * s->exit->width;
+		}
 		if (s->map[y][x] == 'P')
 		{
 			mlx_put_image_to_window(s->mlx_ptr, s->win_ptr, s->player->ptr, s->x_pos, s->y_pos);
-			// creat_image(s, s->background, s->player, 0);
 			// s->player->x_pos = s->x_pos + 0.5;
 			// s->player->y_pos = s->y_pos + 0.5;
 			// s->map[y][x] = '0';
@@ -96,7 +95,6 @@ void create_frontround(t_struct *s)
 		else if (s->map[y][x] == 'C')
 		{
 			mlx_put_image_to_window(s->mlx_ptr, s->win_ptr, s->item->ptr, s->x_pos, s->y_pos);
-			// creat_image(s, s->background, s->item, 0);
 			s->x_pos = ++x * s->wall->width;
 		}
 		else
@@ -110,7 +108,7 @@ void create_frontround(t_struct *s)
 	}
 }
 
-void up_player(t_struct *s)
+void moving_player(t_struct *s)
 {
 	int x = 0;
 	int y = 0;
@@ -119,63 +117,56 @@ void up_player(t_struct *s)
 	{
 		if (s->map[y][x] == 'P')
 		{
-			if (s->map[y - 1][x] != '1')
+			if (s->map[y + s->v][x + s->g] != '1')
 			{
 				s->map[y][x] = '0';
-				s->map[--y][x] = 'P';
-				break ;
+				s->map[y += s->v][x += s->g] = 'P';
+				printf ("y: %d | x: %d\n", y, x);
 			}
+			break ;
 		}
 		else
 			x++;
-		if (!s->map[y][x] && y++)
+		if (!s->map[y][x] && ++y)
 			x = 0;
 	}
-}
-void left_player(t_struct *s)
-{
-	int x = 0;
-	int y = 0;
-
-	while (s->map[y])
-	{
-		if (s->map[y][x] == 'P')
-		{
-			if (s->map[y][x - 1] != '1')
-			{
-				s->map[y][x] = '0';
-				s->map[y][--x] = 'P';
-				break ;
-			}
-		}
-		else
-			x++;
-		if (!s->map[y][x] && y++)
-			x = 0;
-	}
-}
-
-int	key_hook(int keycode, t_struct *s)
-{
-	if (keycode == UP)
-	{
-		up_player(s);
-		mlx_put_image_to_window(s->mlx_ptr, s->win_ptr, s->background->ptr, 0, 0);
-		create_frontround(s);
-	}
-	if (keycode == LEFT)
-	{
-		left_player(s);
-		mlx_put_image_to_window(s->mlx_ptr, s->win_ptr, s->background->ptr, 0, 0);
-		create_frontround(s);
-	}
-
-	return(printf("%i\n", keycode));
-
+	s->v = 0;
+	s->g = 0;
 }
 
 void put_game(t_struct *s)
 {
-	create_frontround(s);
-	mlx_put_image_to_window(s->mlx_ptr, s->win_ptr, s->background->ptr, 0, 0);
+		moving_player(s);
+		mlx_put_image_to_window(s->mlx_ptr, s->win_ptr, s->background->ptr, 0, 0);
+		create_frontround(s);
+}
+
+int	key_hook(int keycode, t_struct *s)
+{
+	printf ("v: %d | g: %d\n", s->v, s->g);
+	if (keycode == UP)
+	{
+		s->v = -1; /* Заменить на speed и включить в структуру*/
+		// put_game(s);
+	}
+	if (keycode == DOWN)
+	{
+		s->v = 1;
+		// put_game(s);
+	}
+	if (keycode == LEFT)
+	{
+		s->g = -1;
+		// put_game(s);
+	}
+	if (keycode == RIGHT)
+	{
+		s->g = 1;
+		// put_game(s);
+	}
+		put_game(s);
+	
+
+	printf ("v: %d | g: %d\n", s->v, s->g);
+	return(printf("%i\n", keycode));
 }

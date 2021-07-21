@@ -46,6 +46,8 @@ typedef struct	s_struct
 	void *win_ptr;
 	int x;
 	int y;
+	int v;
+	int g;
 	int x_pos;
 	int y_pos;
 	t_xpm	*background;
@@ -69,8 +71,7 @@ int		image_pixel_get(t_xpm *data, int x, int y);
 void	creat_image(t_struct *s, t_xpm *dest, t_xpm *sorc, int color);
 void	init_xpm_images(t_struct *s);
 void	put_game(t_struct *s);
-void	up_player(t_struct *s);
+void	moving_player(t_struct *s);
 int		key_hook(int keycode, t_struct *s);
-
 
 #endif
