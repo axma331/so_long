@@ -12,15 +12,19 @@
 # define ITEM "xpm/item.xpm"
 # define EXIT "xpm/exit.xpm"
 
+# define UP		13
+# define LEFT	0
+# define RIGHT	2
+# define DOWN	1
 
-typedef struct	s_data
+
+typedef struct	s_tmp
 {
-	void *img_ptr;
-	char *addr;
-	int	bits_per_pixel;
-	int	line_length;
-	int	endian;
-}				t_data;
+	int ret;
+	int fd;
+	int t1;
+	int t2;
+}				t_tmp;
 
 typedef struct	s_xpm
 {
@@ -31,12 +35,13 @@ typedef struct	s_xpm
 	int	endian;
 	int	width;
 	int	heigth;
-	int x_pos; /*удалить*/
-	int y_pos; /*удалить*/
+	double	x_pos;
+	double	y_pos;
 }				t_xpm;
 
 typedef struct	s_struct
 {
+	char **map;
 	void *mlx_ptr;
 	void *win_ptr;
 	int x;
@@ -50,19 +55,22 @@ typedef struct	s_struct
 	t_xpm	*player;
 	t_xpm	*wall;
 	t_xpm	*tmp;
-	t_data	*img;
+	t_tmp	*temp;
 	// t_data *img_bord;
 }				t_struct;
 
 char	**init_map(char **str);
 void	*init_mlx_xpm_file_to_img_or_new_img(t_struct *s, char *xpm_file, int width,int height);
-void	*init_mlx_new_window(t_struct *s, char **map);
-void	create_background(t_struct *s, char **map);
-void	create_frontround(t_struct *s, char **map);
+void	*init_mlx_new_window(t_struct *s);
+void	create_background(t_struct *s);
+void	create_frontround(t_struct *s);
 void	my_mlx_pixel_put(t_xpm *data, int x, int y, int color);
 int		image_pixel_get(t_xpm *data, int x, int y);
 void	creat_image(t_struct *s, t_xpm *dest, t_xpm *sorc, int color);
 void	init_xpm_images(t_struct *s);
-void	put_game(t_struct *s, char **map);
+void	put_game(t_struct *s);
+void	up_player(t_struct *s);
+int		key_hook(int keycode, t_struct *s);
+
 
 #endif

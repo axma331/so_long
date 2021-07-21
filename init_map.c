@@ -25,7 +25,7 @@ char	**init_map(char **map)
 		map = (char **)ft_calloc(2 + i, sizeof(char *));
 		if (!map)
 			exit (1);
-			j = -1;
+		j = -1;
 		while(tmp[++j])
 			map[j] = tmp[j];
 		free(tmp);

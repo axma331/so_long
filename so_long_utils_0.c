@@ -21,23 +21,20 @@ void	init_xpm_images(t_struct *s)
 	s->exit = init_mlx_xpm_file_to_img_or_new_img(s, EXIT, 0, 0);
 }
 
-void	*init_mlx_new_window(t_struct *s, char **map)
+void	*init_mlx_new_window(t_struct *s)
 {
-	int x;
 	int x_cnt;
-	int y_cnt;
 
-	x = 0;
 	x_cnt = 0;
-	y_cnt = 0;
-	while (map[y_cnt][x])
+	while (s->map[s->y])
 	{
-		if (map[y_cnt][x])
-			x_cnt++;
-		if (!map[y_cnt][++x] && ++y_cnt)
-			x = 0;
+		if (s->map[s->y][x_cnt++])
+			if (x_cnt > s->x)
+				s->x = x_cnt;
+		if (!s->map[s->y][x_cnt] && ++s->y)
+			x_cnt = 0;
 	}
-	s->x = x_cnt / y_cnt * s->wall->width;
-	s->y = y_cnt * s->wall->heigth;
+	s->x *= s->wall->width;
+	s->y *= s->wall->heigth;
 	return (mlx_new_window(s->mlx_ptr, s->x, s->y, "so_long"));
 }
