@@ -145,28 +145,13 @@ int	key_hook(int keycode, t_struct *s)
 {
 	printf ("v: %d | g: %d\n", s->v, s->g);
 	if (keycode == UP)
-	{
 		s->v = -1; /* Заменить на speed и включить в структуру*/
-		// put_game(s);
-	}
 	if (keycode == DOWN)
-	{
 		s->v = 1;
-		// put_game(s);
-	}
 	if (keycode == LEFT)
-	{
 		s->g = -1;
-		// put_game(s);
-	}
 	if (keycode == RIGHT)
-	{
 		s->g = 1;
-		// put_game(s);
-	}
 		put_game(s);
-	
-
-	printf ("v: %d | g: %d\n", s->v, s->g);
 	return(printf("%i\n", keycode));
 }
