@@ -26,7 +26,8 @@ void creat_image(t_struct *s, t_xpm *dest, t_xpm *sorc, int color)
 			my_mlx_pixel_put(dest, x + s->x_pos, y + s->y_pos, color);
 		else
 		{
-			if((sorc == s->item || sorc == s->player || sorc == s->exit) && (image_pixel_get(sorc, x, y)) < 0)
+			// if((sorc == s->item || sorc == s->player || sorc == s->exit) && (image_pixel_get(sorc, x, y)) < 0)
+			if((image_pixel_get(sorc, x, y)) < 0)
 				my_mlx_pixel_put(dest, x + s->x_pos, y + s->y_pos, COLOR);
 			else
 			my_mlx_pixel_put(dest, x + s->x_pos, y + s->y_pos, image_pixel_get(sorc, x, y));
@@ -119,8 +120,17 @@ void moving_player(t_struct *s)
 		{
 			if (s->map[y + s->v][x + s->g] != '1')
 			{
+				
+				// if (s->map[y + s->v][x + s->g] == 'E')
+				// {
+				// 	sleep (2);
+				// 	ft_exit("GAME OWER!", 0);
+				// }
+				if (s->map[y + s->v][x + s->g] == 'C')
+					s->collec++;
 				s->map[y][x] = '0';
 				s->map[y += s->v][x += s->g] = 'P';
+					++s->steps;
 				printf ("y: %d | x: %d\n", y, x);
 			}
 			break ;
@@ -139,6 +149,10 @@ void put_game(t_struct *s)
 		moving_player(s);
 		mlx_put_image_to_window(s->mlx_ptr, s->win_ptr, s->background->ptr, 0, 0);
 		create_frontround(s);
+		mlx_string_put(s->mlx_ptr, s->win_ptr, 0, 0, 0x00FF0000, "Steps: ");
+		mlx_string_put(s->mlx_ptr, s->win_ptr, 0, 30, 0x00FF0000, "Items: ");
+		mlx_string_put(s->mlx_ptr, s->win_ptr, 70, 0, 0x00FF0000, ft_itoa(s->steps));
+		mlx_string_put(s->mlx_ptr, s->win_ptr, 70, 30, 0x00FF0000, ft_itoa(s->collec));
 }
 
 int	key_hook(int keycode, t_struct *s)

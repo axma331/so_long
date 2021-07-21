@@ -6,7 +6,7 @@
 # include <stdio.h>
 # include <unistd.h>
 
-# define COLOR 0x0000FF00
+# define COLOR 0x0000FFF0
 # define WALL "xpm/tree_1.1.xpm"
 # define PLAYER "xpm/player.xpm"
 # define ITEM "xpm/item.xpm"
@@ -50,6 +50,8 @@ typedef struct	s_struct
 	int g;
 	int x_pos;
 	int y_pos;
+	int steps;
+	int collec;
 	t_xpm	*background;
 	t_xpm	*frontround;
 	t_xpm	*exit;
