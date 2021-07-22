@@ -45,6 +45,30 @@ void creat_image(t_struct *s, t_xpm *dest, t_xpm *sorc, int color)
 
 }
 
+void background_for_steps(t_struct *s, t_xpm *dest, int color)
+{
+	int x;
+	int y;
+	int l;
+	
+	x = 0;
+	y = 0;
+	if (s->steps < 100)
+		l = 90;
+	else
+		l = 100;
+	while(x < l)
+	{
+		my_mlx_pixel_put(dest, x , y , color);
+		if (++x == l && ++y)
+		{
+			if (y == 40)
+				break;
+			x = 0;
+		}
+	}
+}
+
 void create_background(t_struct *s)
 {
 	int x = 0;
@@ -144,15 +168,17 @@ void moving_player(t_struct *s)
 	s->g = 0;
 }
 
-void put_game(t_struct *s)
+void *put_game(t_struct *s)
 {
-		moving_player(s);
-		mlx_put_image_to_window(s->mlx_ptr, s->win_ptr, s->background->ptr, 0, 0);
-		create_frontround(s);
-		mlx_string_put(s->mlx_ptr, s->win_ptr, 0, 0, 0x00FF0000, "Steps: ");
-		mlx_string_put(s->mlx_ptr, s->win_ptr, 0, 30, 0x00FF0000, "Items: ");
-		mlx_string_put(s->mlx_ptr, s->win_ptr, 70, 0, 0x00FF0000, ft_itoa(s->steps));
-		mlx_string_put(s->mlx_ptr, s->win_ptr, 70, 30, 0x00FF0000, ft_itoa(s->collec));
+	moving_player(s);
+	background_for_steps(s, s->background, 0x00666699);
+	mlx_put_image_to_window(s->mlx_ptr, s->win_ptr, s->background->ptr, 0, 0);
+	create_frontround(s);
+	mlx_string_put(s->mlx_ptr, s->win_ptr, 0, 0, 0x0033CCFF, "Steps:");
+	mlx_string_put(s->mlx_ptr, s->win_ptr, 0, 20, 0x0033CCFF, "Items:");
+	mlx_string_put(s->mlx_ptr, s->win_ptr, 70, 0, 0x0033CCFF, ft_itoa(s->steps));
+	mlx_string_put(s->mlx_ptr, s->win_ptr, 70, 20, 0x0033CCFF, ft_itoa(s->collec));
+	return(s);
 }
 
 int	key_hook(int keycode, t_struct *s)

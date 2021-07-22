@@ -6,7 +6,7 @@
 # include <stdio.h>
 # include <unistd.h>
 
-# define COLOR 0x0000FFF0
+# define COLOR 0x00000CC00
 # define WALL "xpm/tree_1.1.xpm"
 # define PLAYER "xpm/player.xpm"
 # define ITEM "xpm/item.xpm"
@@ -72,8 +72,9 @@ void	my_mlx_pixel_put(t_xpm *data, int x, int y, int color);
 int		image_pixel_get(t_xpm *data, int x, int y);
 void	creat_image(t_struct *s, t_xpm *dest, t_xpm *sorc, int color);
 void	init_xpm_images(t_struct *s);
-void	put_game(t_struct *s);
+void	*put_game(t_struct *s);
 void	moving_player(t_struct *s);
 int		key_hook(int keycode, t_struct *s);
+void	background_for_steps(t_struct *s, t_xpm *dest, int color);
 
 #endif
