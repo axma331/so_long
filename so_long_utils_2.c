@@ -201,6 +201,8 @@ int drow_movements(t_struct *s)
 
 		s->cnt++;
 		if (s->cnt % 3001 == 0){
+			mlx_put_image_to_window(s->mlx_ptr, s->win_ptr, s->background->ptr, 0, 0);
+			create_frontround(&s);
 			creat_image(s, s->background, s->player1, 0);
 			mlx_put_image_to_window(s->mlx_ptr, s->win_ptr, s->background->ptr, 0, 0);
 			mlx_put_image_to_window(s->mlx_ptr, s->win_ptr, s->player1->ptr, s->player1->x_pos, s->player1->y_pos);
