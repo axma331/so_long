@@ -7,10 +7,19 @@
 # include <unistd.h>
 
 # define COLOR 0x00000CC00
-# define WALL "xpm/tree_1.1.xpm"
-# define PLAYER "xpm/player.xpm"
-# define ITEM "xpm/item.xpm"
 # define EXIT "xpm/exit.xpm"
+# define WALL "xpm/tree_1.1.xpm"
+# define PLAYER1 "xpm/player_1.xpm"
+# define PLAYER2 "xpm/player_2.xpm"
+# define PLAYER3 "xpm/player_3.xpm"
+# define PLAYER4 "xpm/player_4.xpm"
+# define PLAYER5 "xpm/player_5.xpm"
+# define PLAYER6 "xpm/player_6.xpm"
+
+# define ITEM1 "xpm/item_1.xpm"
+# define ITEM2 "xpm/item_2.xpm"
+# define ITEM3 "xpm/item_3.xpm"
+# define ITEM4 "xpm/item_4.xpm"
 
 # define UP		13
 # define LEFT	0
@@ -52,14 +61,20 @@ typedef struct	s_struct
 	int y_pos;
 	int steps;
 	int collec;
+	int cnt;
 	t_xpm	*background;
 	t_xpm	*frontround;
 	t_xpm	*exit;
 	t_xpm	*item;
-	t_xpm	*player;
+	t_xpm	*player1;
 	t_xpm	*wall;
 	t_xpm	*tmp;
 	t_tmp	*temp;
+	t_xpm	*player2;
+	t_xpm	*player3;
+	t_xpm	*player4;
+	t_xpm	*player5;
+	t_xpm	*player6;
 	// t_data *img_bord;
 }				t_struct;
 
@@ -76,5 +91,6 @@ void	*put_game(t_struct *s);
 void	moving_player(t_struct *s);
 int		key_hook(int keycode, t_struct *s);
 void	background_for_steps(t_struct *s, t_xpm *dest, int color);
+int 	drow_movements(t_struct *s);
 
 #endif

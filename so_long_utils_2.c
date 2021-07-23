@@ -111,9 +111,9 @@ void create_frontround(t_struct *s)
 		}
 		if (s->map[y][x] == 'P')
 		{
-			mlx_put_image_to_window(s->mlx_ptr, s->win_ptr, s->player->ptr, s->x_pos, s->y_pos);
-			// s->player->x_pos = s->x_pos + 0.5;
-			// s->player->y_pos = s->y_pos + 0.5;
+			mlx_put_image_to_window(s->mlx_ptr, s->win_ptr, s->player1->ptr, s->x_pos, s->y_pos);
+			s->player1->x_pos = s->x_pos;
+			s->player1->y_pos = s->y_pos;
 			// s->map[y][x] = '0';
 			s->x_pos = ++x * s->wall->width;
 		}
@@ -183,15 +183,53 @@ void *put_game(t_struct *s)
 
 int	key_hook(int keycode, t_struct *s)
 {
-	printf ("v: %d | g: %d\n", s->v, s->g);
 	if (keycode == UP)
 		s->v = -1; /* Заменить на speed и включить в структуру*/
-	if (keycode == DOWN)
+	else if (keycode == DOWN)
 		s->v = 1;
 	if (keycode == LEFT)
 		s->g = -1;
 	if (keycode == RIGHT)
 		s->g = 1;
-		put_game(s);
+	printf ("v: %d | g: %d\n", s->v, s->g);
+	put_game(s);
 	return(printf("%i\n", keycode));
+}
+
+int drow_movements(t_struct *s)
+{
+
+		s->cnt++;
+		if (s->cnt % 3001 == 0){
+			creat_image(s, s->background, s->player1, 0);
+			mlx_put_image_to_window(s->mlx_ptr, s->win_ptr, s->background->ptr, 0, 0);
+			mlx_put_image_to_window(s->mlx_ptr, s->win_ptr, s->player1->ptr, s->player1->x_pos, s->player1->y_pos);
+			printf("----------------------------- %d\n", s->cnt);
+		}
+		if (s->cnt % 4002 == 0){
+			creat_image(s, s->background, s->player2, 0);
+			mlx_put_image_to_window(s->mlx_ptr, s->win_ptr, s->background->ptr, 0, 0);
+			mlx_put_image_to_window(s->mlx_ptr, s->win_ptr, s->player2->ptr, s->player1->x_pos, s->player1->y_pos);
+			}
+		if (s->cnt % 6003 == 0){
+			creat_image(s, s->background, s->player3, 0);
+			mlx_put_image_to_window(s->mlx_ptr, s->win_ptr, s->background->ptr, 0, 0);
+			mlx_put_image_to_window(s->mlx_ptr, s->win_ptr, s->player3->ptr, s->player1->x_pos, s->player1->y_pos);
+		}
+		if (s->cnt % 8004 == 0){
+			creat_image(s, s->background, s->player4, 0);
+			mlx_put_image_to_window(s->mlx_ptr, s->win_ptr, s->background->ptr, 0, 0);
+			mlx_put_image_to_window(s->mlx_ptr, s->win_ptr, s->player3->ptr, s->player1->x_pos, s->player1->y_pos);
+		}
+		if (s->cnt % 10005 == 0){
+			creat_image(s, s->background, s->player5, 0);
+			mlx_put_image_to_window(s->mlx_ptr, s->win_ptr, s->background->ptr, 0, 0);
+			mlx_put_image_to_window(s->mlx_ptr, s->win_ptr, s->player5->ptr, s->player1->x_pos, s->player1->y_pos);
+		}
+		if (s->cnt % 12006 == 0){
+			creat_image(s, s->background, s->player6, 0);
+			mlx_put_image_to_window(s->mlx_ptr, s->win_ptr, s->background->ptr, 0, 0);
+			mlx_put_image_to_window(s->mlx_ptr, s->win_ptr, s->player6->ptr, s->player1->x_pos, s->player1->y_pos);
+			}
+	return (1);
 }

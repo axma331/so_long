@@ -21,8 +21,8 @@ int main(int argc, char **argv)
 	mlx_put_image_to_window(s.mlx_ptr, s.win_ptr, s.background->ptr, 0, 0);
 	create_frontround(&s);
 
+	mlx_loop_hook(s.mlx_ptr, drow_movements, &s);
 	mlx_key_hook(s.win_ptr, key_hook, &s);
-	// mlx_loop_hook(s.mlx_ptr, &put_game, &s);
 	mlx_loop(s.mlx_ptr);
 	return (0);
 }
