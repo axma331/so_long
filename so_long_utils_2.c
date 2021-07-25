@@ -217,8 +217,16 @@ int	key_hook(int keycode, t_struct *s)
 int player_movements(t_struct *s)
 {
 		s->cnt++;
+<<<<<<< HEAD
 		if (s->cnt == 2000){
 			mlx_put_image_to_window(s->mlx_ptr, s->win_ptr, s->imgground->ptr, s->player1->x_pos, s->player1->y_pos);
+=======
+		if (s->cnt % 3001 == 0){
+			mlx_put_image_to_window(s->mlx_ptr, s->win_ptr, s->background->ptr, 0, 0);
+			create_frontround(&s);
+			creat_image(s, s->background, s->player1, 0);
+			mlx_put_image_to_window(s->mlx_ptr, s->win_ptr, s->background->ptr, 0, 0);
+>>>>>>> cb133ebdc5d8e975a9c1297b96e703c9e5d5790c
 			mlx_put_image_to_window(s->mlx_ptr, s->win_ptr, s->player1->ptr, s->player1->x_pos, s->player1->y_pos);
 			}
 		if (s->cnt == 4000){
