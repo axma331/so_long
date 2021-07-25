@@ -18,10 +18,12 @@ int main(int argc, char **argv)
 	s.win_ptr = init_mlx_new_window(&s);
 
 	create_background(&s);
+	background_for_img(&s, s.imgground, COLOR);
 	mlx_put_image_to_window(s.mlx_ptr, s.win_ptr, s.background->ptr, 0, 0);
 	create_frontround(&s);
 
-	mlx_loop_hook(s.mlx_ptr, drow_movements, &s);
+	// mlx_loop_hook(s.mlx_ptr, skeleton_movements, &s);
+	mlx_loop_hook(s.mlx_ptr, player_movements, &s);
 	mlx_key_hook(s.win_ptr, key_hook, &s);
 	mlx_loop(s.mlx_ptr);
 	return (0);

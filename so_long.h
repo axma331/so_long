@@ -6,7 +6,7 @@
 # include <stdio.h>
 # include <unistd.h>
 
-# define COLOR 0x00000CC00
+# define COLOR 0x000FFCC00
 # define EXIT "xpm/exit.xpm"
 # define WALL "xpm/tree_1.1.xpm"
 # define PLAYER1 "xpm/player_1.xpm"
@@ -20,6 +20,11 @@
 # define ITEM2 "xpm/item_2.xpm"
 # define ITEM3 "xpm/item_3.xpm"
 # define ITEM4 "xpm/item_4.xpm"
+
+# define SKELETON1 "xpm/skeleton_1.xpm"
+# define SKELETON2 "xpm/skeleton_2.xpm"
+# define SKELETON3 "xpm/skeleton_3.xpm"
+# define SKELETON4 "xpm/skeleton_4.xpm"
 
 # define UP		13
 # define LEFT	0
@@ -75,7 +80,11 @@ typedef struct	s_struct
 	t_xpm	*player4;
 	t_xpm	*player5;
 	t_xpm	*player6;
-	// t_data *img_bord;
+	t_xpm	*skeleton1;
+	t_xpm	*skeleton2;
+	t_xpm	*skeleton3;
+	t_xpm	*skeleton4;
+	t_xpm	*imgground;
 }				t_struct;
 
 char	**init_map(char **str);
@@ -91,6 +100,8 @@ void	*put_game(t_struct *s);
 void	moving_player(t_struct *s);
 int		key_hook(int keycode, t_struct *s);
 void	background_for_steps(t_struct *s, t_xpm *dest, int color);
-int 	drow_movements(t_struct *s);
+int 	player_movements(t_struct *s);
+void background_for_img(t_struct *s, t_xpm *dest, int color);
+int skeleton_movements(t_struct *s);
 
 #endif

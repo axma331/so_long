@@ -24,6 +24,10 @@ void	init_xpm_images(t_struct *s)
 	s->player4 = init_mlx_xpm_file_to_img_or_new_img(s, PLAYER4, 0, 0);
 	s->player5 = init_mlx_xpm_file_to_img_or_new_img(s, PLAYER5, 0, 0);
 	s->player6 = init_mlx_xpm_file_to_img_or_new_img(s, PLAYER6, 0, 0);
+	s->skeleton1 = init_mlx_xpm_file_to_img_or_new_img(s, SKELETON1, 0, 0);
+	s->skeleton2 = init_mlx_xpm_file_to_img_or_new_img(s, SKELETON2, 0, 0);
+	s->skeleton3 = init_mlx_xpm_file_to_img_or_new_img(s, SKELETON3, 0, 0);
+	s->skeleton4 = init_mlx_xpm_file_to_img_or_new_img(s, SKELETON4, 0, 0);
 }
 
 void	*init_mlx_new_window(t_struct *s)
