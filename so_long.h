@@ -6,54 +6,23 @@
 # include <unistd.h>
 # include <stdio.h>
 
-# define SPEED 5
+# define SPEED 10
 # define COLOR 0x00099CC66
-
-# define EXIT "xpm/exit.xpm"
-# define WALL "xpm/tree.xpm"
-# define COLLECTIBLE "xpm/collectible.xpm"
-
-# define PLAYER1 "xpm/player_1.xpm"
-# define PLAYER2 "xpm/player_2.xpm"
-# define PLAYER3 "xpm/player_3.xpm"
-# define PLAYER4 "xpm/player_4.xpm"
-# define PLAYER5 "xpm/player_5.xpm"
-# define PLAYER6 "xpm/player_6.xpm"
-
-# define PLYATK1 "xpm/player_attak_1.xpm"
-# define PLYATK2 "xpm/player_attak_2.xpm"
-# define PLYATK3 "xpm/player_attak_3.xpm"
-# define PLYATK4 "xpm/player_attak_4.xpm'
-
-# define ENEMY1 "xpm/skeleton_1.xpm"
-# define ENEMY2 "xpm/skeleton_2.xpm"
-# define ENEMY3 "xpm/skeleton_3.xpm"
-# define ENEMY4 "xpm/skeleton_4.xpm"
 
 # define UP		13
 # define LEFT	0
 # define RIGHT	2
 # define DOWN	1
 
-
-typedef struct	s_flags
-{
-	int	enm;
-}				t_flags;
-
 typedef struct	s_info
 {
-	int	tmp;
 	int	x;
 	int	y;
 	int	p_flag;
 	int	e_flag;
+	int	c_flag;
 	int	vertical;
 	int	horizontal;
-	int	player_y;
-	int	player_x;
-	int	enemy_x;
-	int	enemy_y;
 	int	steps_cnt;
 	int	collectible_cnt;
 	int	only_one_plyaer;
@@ -86,7 +55,6 @@ typedef struct	s_struct
 	t_xpm	*player_attak[4];
 	t_xpm	*collectible;
 	t_xpm	*gameground;
-	t_flags	flag;
 }				t_struct;
 
 void	*init_map(char *filmane);
@@ -101,7 +69,6 @@ void	counting_panel(t_struct *s, t_xpm *dest, int color);
 void	player_movements(t_struct *s);
 void	enemy_movements(t_struct *s);
 void	player_attak(t_struct *s);
-void	init_mowement_images(t_struct *s);
 
 int	image_pixel_get(t_xpm *data, int x, int y);
 int	key_hook(int keycode, t_struct *s);

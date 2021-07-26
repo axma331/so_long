@@ -40,7 +40,7 @@ void create_gameground(t_struct *s)
 				ft_exit("Error: More player!", 1);
 			else
 				s->info.only_one_plyaer = 1;
-			if (s->flag.enm)
+			if (s->info.c_flag)
 				player_attak(s);
 			else
 				player_movements(s);

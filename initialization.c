@@ -36,23 +36,23 @@ void *init_map(char *filmane)
 
 void	init_idle_images(t_struct *s)
 {
-	s->wall = init_mlx_xpm_file_to_img_or_new_img(s, WALL, 0, 0);
-    s->collectible = init_mlx_xpm_file_to_img_or_new_img(s, COLLECTIBLE, 0, 0);
-	s->exit = init_mlx_xpm_file_to_img_or_new_img(s, EXIT, 0, 0);
-	s->enemy[0] = init_mlx_xpm_file_to_img_or_new_img(s, ENEMY1, 0, 0);
-	s->enemy[1] = init_mlx_xpm_file_to_img_or_new_img(s, ENEMY2, 0, 0);
-	s->enemy[2] = init_mlx_xpm_file_to_img_or_new_img(s, ENEMY3, 0, 0);
-	s->enemy[3] = init_mlx_xpm_file_to_img_or_new_img(s, ENEMY4, 0, 0);
-	s->player[0] = init_mlx_xpm_file_to_img_or_new_img(s, PLAYER1, 0, 0);
-	s->player[1] = init_mlx_xpm_file_to_img_or_new_img(s, PLAYER2, 0, 0);
-	s->player[2] = init_mlx_xpm_file_to_img_or_new_img(s, PLAYER3, 0, 0);
-	s->player[3] = init_mlx_xpm_file_to_img_or_new_img(s, PLAYER4, 0, 0);
-	s->player[4] = init_mlx_xpm_file_to_img_or_new_img(s, PLAYER5, 0, 0);
-	s->player[5] = init_mlx_xpm_file_to_img_or_new_img(s, PLAYER6, 0, 0);
-	s->player_attak[0] = init_mlx_xpm_file_to_img_or_new_img(s, PLYATK1, 0, 0);
-	s->player_attak[1] = init_mlx_xpm_file_to_img_or_new_img(s, PLYATK2, 0, 0);
-	s->player_attak[2] = init_mlx_xpm_file_to_img_or_new_img(s, PLYATK3, 0, 0);
-	s->player_attak[3] = init_mlx_xpm_file_to_img_or_new_img(s, PLYATK4, 0, 0);
+	s->wall = init_mlx_xpm_file_to_img_or_new_img(s, "xpm/tree.xpm", 0, 0);
+    s->collectible = init_mlx_xpm_file_to_img_or_new_img(s, "xpm/collectible.xpm", 0, 0);
+	s->exit = init_mlx_xpm_file_to_img_or_new_img(s, "xpm/exit.xpm", 0, 0);
+	s->enemy[0] = init_mlx_xpm_file_to_img_or_new_img(s, "xpm/skeleton_1.xpm", 0, 0);
+	s->enemy[1] = init_mlx_xpm_file_to_img_or_new_img(s, "xpm/skeleton_2.xpm", 0, 0);
+	s->enemy[2] = init_mlx_xpm_file_to_img_or_new_img(s, "xpm/skeleton_3.xpm", 0, 0);
+	s->enemy[3] = init_mlx_xpm_file_to_img_or_new_img(s, "xpm/skeleton_4.xpm", 0, 0);
+	s->player[0] = init_mlx_xpm_file_to_img_or_new_img(s, "xpm/player_1.xpm", 0, 0);
+	s->player[1] = init_mlx_xpm_file_to_img_or_new_img(s, "xpm/player_2.xpm", 0, 0);
+	s->player[2] = init_mlx_xpm_file_to_img_or_new_img(s, "xpm/player_3.xpm", 0, 0);
+	s->player[3] = init_mlx_xpm_file_to_img_or_new_img(s, "xpm/player_4.xpm", 0, 0);
+	s->player[4] = init_mlx_xpm_file_to_img_or_new_img(s, "xpm/player_5.xpm", 0, 0);
+	s->player[5] = init_mlx_xpm_file_to_img_or_new_img(s, "xpm/player_6.xpm", 0, 0);
+	s->player_attak[0] = init_mlx_xpm_file_to_img_or_new_img(s, "xpm/player_attak_1.xpm", 0, 0);
+	s->player_attak[1] = init_mlx_xpm_file_to_img_or_new_img(s, "xpm/player_attak_2.xpm", 0, 0);
+	s->player_attak[2] = init_mlx_xpm_file_to_img_or_new_img(s, "xpm/player_attak_3.xpm", 0, 0);
+	s->player_attak[3] = init_mlx_xpm_file_to_img_or_new_img(s, "xpm/player_attak_4.xpm", 0, 0);
 }
 
 void	*init_mlx_new_window(t_struct *s)

@@ -17,7 +17,7 @@ void moving_player(t_struct *s)
 					ft_exit("GAME OWER!", 0);
 				if (s->map[y + s->info.vertical][x + s->info.horizontal] == 'C')
 				{
-					s->flag.enm = 1;
+					s->info.c_flag = 1;
 					s->info.collectible_cnt++;
 				}
 				s->map[y][x] = '0';
@@ -39,25 +39,18 @@ void player_movements(t_struct *s)
 {
 	s->info.p_flag  =  (s->cnt % (6 * SPEED )) / SPEED;
 	draw_image(s, s->gameground, s->player[s->info.p_flag], 0);
-	s->info.player_x = s->info.x;
-	s->info.player_y = s->info.y;
 }
 
 void enemy_movements(t_struct *s)
 {	
 	s->info.e_flag  =  (s->cnt % (4 * SPEED )) / SPEED;
 	draw_image(s, s->gameground, s->enemy[s->info.e_flag], 0);
-	s->info.enemy_x = s->info.x;
-	s->info.enemy_x = s->info.y;
 }
 
 void player_attak(t_struct *s)
 {
 	s->info.p_flag  =  (s->cnt % (4 * SPEED )) / SPEED;
 	draw_image(s, s->gameground, s->player_attak[s->info.p_flag], 0);
-	if (!((s->cnt % (9 * SPEED )) / SPEED))
-	{
-		printf("%d\n", (s->cnt % (9 * SPEED )) / SPEED);
-		s->flag.enm = 0;
-	}
+	if (s->info.p_flag == 0)
+		s->info.c_flag = 0;
 }
