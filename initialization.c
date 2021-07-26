@@ -61,6 +61,11 @@ void	init_mowement_images(t_struct *s)
 	s->player_run[5] = init_mlx_xpm_file_to_img_or_new_img(s, "xpm/player_run_6.xpm", 0, 0);
 	s->player_run[6] = init_mlx_xpm_file_to_img_or_new_img(s, "xpm/player_run_7.xpm", 0, 0);
 	s->player_run[7] = init_mlx_xpm_file_to_img_or_new_img(s, "xpm/player_run_8.xpm", 0, 0);
+
+	s->player_attak[0] = init_mlx_xpm_file_to_img_or_new_img(s, "xpm/player_attak_1.xpm", 0, 0);
+	s->player_attak[1] = init_mlx_xpm_file_to_img_or_new_img(s, "xpm/player_attak_2.xpm", 0, 0);
+	s->player_attak[2] = init_mlx_xpm_file_to_img_or_new_img(s, "xpm/player_attak_3.xpm", 0, 0);
+	s->player_attak[3] = init_mlx_xpm_file_to_img_or_new_img(s, "xpm/player_attak_4.xpm", 0, 0);
 }
 
 void	*init_mlx_new_window(t_struct *s)

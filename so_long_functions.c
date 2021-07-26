@@ -31,39 +31,27 @@ void create_gameground(t_struct *s)
 	while (s->map[y])
 	{
 		if (s->map[y][x] == '1')
-		{
-			creat_image(s, s->gameground, s->wall, 0);
-			s->info.x = ++x * s->wall->width;
-		}
-        else if (s->map[y][x] == 'E')
-		{
-			creat_image(s, s->gameground, s->exit, 0);
-			s->info.x = ++x * s->exit->width;
-		}
+			draw_image(s, s->gameground, s->wall, 0);
+		else if (s->map[y][x] == 'E')
+			draw_image(s, s->gameground, s->exit, 0);
 		else if (s->map[y][x] == 'P')
 		{
 			if (s->info.only_one_plyaer)
 				ft_exit("Error: More player!", 1);
 			else
 				s->info.only_one_plyaer = 1;
-			player_movements(s);
-			s->info.x = ++x * s->player[0]->width;
+			if (s->flag.enm)
+				player_attak(s);
+			else
+				player_movements(s);
 		}
 		else if (s->map[y][x] == 'C')
-		{
-			creat_image(s, s->gameground, s->collectible, 0);
-			s->info.x = ++x * s->collectible->width;
-		}
+			draw_image(s, s->gameground, s->collectible, 0);
 		else if (s->map[y][x] == 'K')
-		{
 			enemy_movements(s);
-			s->info.x = ++x * s->enemy[0]->width;
-		}
 		else if (s->map[y][x])
-		{
-			creat_image(s, s->gameground, NULL, COLOR);
-			s->info.x = ++x * s->wall->width;
-		}
+			draw_image(s, s->gameground, NULL, COLOR);
+		s->info.x = ++x * s->wall->width;
 		if (!s->map[y][x])
 		{
 			x = 0;

@@ -28,7 +28,7 @@ int	image_pixel_get(t_xpm *data, int x, int y)
 	return (*(unsigned int*)(data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8))));
 }
 
-void creat_image(t_struct *s, t_xpm *dest, t_xpm *sorc, int color)
+void draw_image(t_struct *s, t_xpm *dest, t_xpm *sorc, int color)
 {
 	int x;
 	int y;
