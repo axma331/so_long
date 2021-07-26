@@ -6,7 +6,9 @@
 # include <unistd.h>
 # include <stdio.h>
 
-# define COLOR 0x000FFCC00
+# define SPEED 5
+# define COLOR 0x00099CC66
+
 # define EXIT "xpm/exit.xpm"
 # define WALL "xpm/tree.xpm"
 # define COLLECTIBLE "xpm/collectible.xpm"
@@ -28,14 +30,14 @@
 # define RIGHT	2
 # define DOWN	1
 
-# define SPEED 10
 
-typedef struct	s_pos
+typedef struct	s_info
 {
+	int	tmp;
 	int	x;
 	int	y;
-	int	p_f;
-	int	e_f;
+	int	p_flag;
+	int	e_flag;
 	int	vertical;
 	int	horizontal;
 	int	player_y;
@@ -44,7 +46,8 @@ typedef struct	s_pos
 	int	enemy_y;
 	int	steps_cnt;
 	int	collectible_cnt;
-}				t_pos;
+	int	only_one_plyaer;
+}				t_info;
 
 typedef struct	s_xpm
 {
@@ -65,17 +68,18 @@ typedef struct	s_struct
 	int cnt;
 	int x;
 	int y;
-	t_pos	pos;
+	t_info	info;
 	t_xpm	*wall;
 	t_xpm	*exit;
-	t_xpm	*player[6];
 	t_xpm	*enemy[4];
+	t_xpm	*player[6];
+	t_xpm	*player_run[8];
 	t_xpm	*collectible;
 	t_xpm	*gameground;
 }				t_struct;
 
 void	*init_map(char *filmane);
-void	init_images(t_struct *s);
+void	init_idle_images(t_struct *s);
 void	*init_mlx_xpm_file_to_img_or_new_img(t_struct *s, char *xpm_file, int width, int height);
 void	*init_mlx_new_window(t_struct *s);
 void	creat_image(t_struct *s, t_xpm *dest, t_xpm *sorc, int color);
@@ -85,6 +89,9 @@ void	moving_player(t_struct *s);
 void	counting_panel(t_struct *s, t_xpm *dest, int color);
 void	player_movements(t_struct *s);
 void	enemy_movements(t_struct *s);
+
+// void	init_mowement_images(t_struct *s);
+// int player_run(t_struct *s);
 
 int	image_pixel_get(t_xpm *data, int x, int y);
 int	key_hook(int keycode, t_struct *s);

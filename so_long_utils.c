@@ -38,13 +38,13 @@ void creat_image(t_struct *s, t_xpm *dest, t_xpm *sorc, int color)
 	while(x < s->wall->width)
 	{
 		if (!sorc)
-			my_mlx_pixel_put(dest, x + s->pos.x, y + s->pos.y, color);
+			my_mlx_pixel_put(dest, x + s->info.x, y + s->info.y, color);
 		else
 		{
 			if((image_pixel_get(sorc, x, y)) < 0)
-				my_mlx_pixel_put(dest, x + s->pos.x, y + s->pos.y, COLOR);
+				my_mlx_pixel_put(dest, x + s->info.x, y + s->info.y, COLOR);
 			else
-			my_mlx_pixel_put(dest, x + s->pos.x, y + s->pos.y, image_pixel_get(sorc, x, y));
+			my_mlx_pixel_put(dest, x + s->info.x, y + s->info.y, image_pixel_get(sorc, x, y));
 		}
 		if (++x == s->wall->width && ++y)
 		{
@@ -56,5 +56,6 @@ void creat_image(t_struct *s, t_xpm *dest, t_xpm *sorc, int color)
 			x = 0;
 		}
 	}
-
+	// if (x == s->wall->width)
+	// 	s->info.x += s->wall->width;
 }

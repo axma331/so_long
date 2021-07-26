@@ -8,7 +8,7 @@ void counting_panel(t_struct *s, t_xpm *dest, int color)
 	
 	x = 0;
 	y = 0;
-	if (s->pos.steps_cnt < 100)
+	if (s->info.steps_cnt < 100)
 		l = 90;
 	else
 		l = 100;
@@ -33,57 +33,72 @@ void create_gameground(t_struct *s)
 		if (s->map[y][x] == '1')
 		{
 			creat_image(s, s->gameground, s->wall, 0);
-			s->pos.x = ++x * s->wall->width;
+			s->info.x = ++x * s->wall->width;
 		}
         else if (s->map[y][x] == 'E')
 		{
 			creat_image(s, s->gameground, s->exit, 0);
-			s->pos.x = ++x * s->exit->width;
+			s->info.x = ++x * s->exit->width;
 		}
 		else if (s->map[y][x] == 'P')
 		{
-            player_movements(s);
-			s->pos.player_x = s->pos.x;
-			s->pos.player_y = s->pos.y;
-			s->pos.x = ++x * s->player[0]->width;
+			if (s->info.only_one_plyaer)
+				ft_exit("Error: More player!", 1);
+			else
+				s->info.only_one_plyaer = 1;
+			player_movements(s);
+			s->info.x = ++x * s->player[0]->width;
 		}
 		else if (s->map[y][x] == 'C')
 		{
 			creat_image(s, s->gameground, s->collectible, 0);
-			s->pos.x = ++x * s->collectible->width;
+			s->info.x = ++x * s->collectible->width;
 		}
 		else if (s->map[y][x] == 'K')
 		{
 			enemy_movements(s);
-			s->pos.player_x = s->pos.x;
-			s->pos.player_y = s->pos.y;
-			s->pos.x = ++x * s->enemy[0]->width;
+			s->info.x = ++x * s->enemy[0]->width;
 		}
 		else if (s->map[y][x])
 		{
 			creat_image(s, s->gameground, NULL, COLOR);
-			s->pos.x = ++x * s->wall->width;
+			s->info.x = ++x * s->wall->width;
 		}
 		if (!s->map[y][x])
 		{
 			x = 0;
-			s->pos.x = x * s->wall->width;
-			s->pos.y = ++y * s->wall->heigth;
+			s->info.x = x * s->wall->width;
+			s->info.y = ++y * s->wall->heigth;
 		}
 	}
-    s->pos.y = 0;
+	s->cnt++;
+    s->info.y = 0;
+	s->info.only_one_plyaer = 0;
+}
+
+int	key_hook(int keycode, t_struct *s)
+{
+	if (keycode == UP)
+		s->info.vertical = -1;
+	else if (keycode == DOWN)
+		s->info.vertical = 1;
+	if (keycode == LEFT)
+		s->info.horizontal = -1;
+	if (keycode == RIGHT)
+		s->info.horizontal = 1;
+	moving_player(s);
+	return(printf("%i\n", keycode));
 }
 
 int put_game(t_struct *s)
 {
-
         create_gameground(s);
         counting_panel(s, s->gameground, 0x00666699);
         mlx_put_image_to_window(s->mlx_ptr, s->win_ptr, s->gameground->ptr, 0, 0);
         mlx_string_put(s->mlx_ptr, s->win_ptr, 0, 0, 0x0033CCFF, "Steps:");
         mlx_string_put(s->mlx_ptr, s->win_ptr, 0, 20, 0x0033CCFF, "Items:");
-        mlx_string_put(s->mlx_ptr, s->win_ptr, 70, 0, 0x0033CCFF, ft_itoa(s->pos.steps_cnt));
-        mlx_string_put(s->mlx_ptr, s->win_ptr, 70, 20, 0x0033CCFF, ft_itoa(s->pos.collectible_cnt));
+        mlx_string_put(s->mlx_ptr, s->win_ptr, 70, 0, 0x0033CCFF, ft_itoa(s->info.steps_cnt));
+        mlx_string_put(s->mlx_ptr, s->win_ptr, 70, 20, 0x0033CCFF, ft_itoa(s->info.collectible_cnt));
         mlx_do_sync(s->mlx_ptr);
 	return(0);
 }

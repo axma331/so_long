@@ -7,9 +7,9 @@ int main(int argc, char **argv)
 	ft_bzero (&s, sizeof(t_struct));
 	s.map = init_map(argv[1]);
 	s.mlx_ptr = mlx_init();
-    init_images(&s);
+    init_idle_images(&s);
+    init_mowement_images(&s);
     s.win_ptr = init_mlx_new_window(&s);
-    
 	mlx_loop_hook(s.mlx_ptr, put_game, &s);
     mlx_key_hook(s.win_ptr, key_hook, &s);
     mlx_loop(s.mlx_ptr);
