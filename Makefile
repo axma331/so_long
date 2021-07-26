@@ -7,7 +7,6 @@ CFLAGS	= $(ERFLG) #-Wall -Wextra -Werror
 LIBFT	:= -L ../libft -lft
 HEDER	:= *.h
 
-
 MLXLIB		= mlx/libmlx.dylib
 MLXFLAGS	= $(MLXLIB) -lmlx -framework OpenGL -framework AppKit
 
@@ -15,10 +14,6 @@ S_SRC	:= $(wildcard *.c)
 
 OBJDIR	:= .obj
 S_OBJ	:= $(S_SRC:%.c=$(OBJDIR)/%.o)
-
-DEPDIR	:= .dep
-DEPFILES := $(wildcard %.c=$(DEPDIR)/%.d)
-DEPFLAGS = -MT $@ -MMD -MP -MF $(DEPDIR)/$*.d
 
 all: $(NAME)
 
@@ -28,17 +23,14 @@ $(NAME): $(S_OBJ) $(MLXLIB)
 	@echo "$(CLRCY)Подключен$(CLRPR)$(MLXLIB)$(CLRRS)"
 	@echo "$(CLRCY)Создан$(CLREL)$@$(CLRRS)"
 
-$(OBJDIR)/%.o: %.c | $(OBJDIR) $(DEPDIR) $(HEDER)
+$(OBJDIR)/%.o: %.c $(OBJDIR) $(HEDER)
 	@$(MAKE) -C ../libft
 	@$(MAKE) -C ./mlx
-	@$(CC) $(CFLAGS) $(DEPFLAGS) -I $(MLXLIB) -c $< -o $@
-	@echo "$(CLRCY)Создан$(CLRGR)$@$(CLRRS)"
+	@$(CC) $(CFLAGS) -I $(MLXLIB) -c $< -o $@
+	@echo "$(CLRCY)Создан$(CLRGR)$@$(CLRRS)"make 
 
-$(OBJDIR) $(DEPDIR):
+$(OBJDIR):
 	@mkdir -p $@
-
-$(DEPFILES):
-sinclude $(wildcard $(DEPFILES))
 
 re:
 	@$(MAKE) fclean
@@ -47,8 +39,8 @@ re:
 clean:
 	@$(MAKE) clean -C ../libft
 	@$(MAKE) clean -C ./mlx
-	@$(RM) $(OBJDIR) $(DEPDIR)
-	@echo "$(CLRCY)Очистка$(CLRRE)$(OBJDIR)$(DEPDIR)$(CLRRS)"
+	@$(RM) $(OBJDIR)
+	@echo "$(CLRCY)Очистка$(CLRRE)$(OBJDIR)$(CLRRS)"
 
 fclean: clean
 	@$(MAKE) fclean -C ../libft
