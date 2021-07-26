@@ -20,6 +20,11 @@
 # define PLAYER5 "xpm/player_5.xpm"
 # define PLAYER6 "xpm/player_6.xpm"
 
+# define PLYATK1 "xpm/player_attak_1.xpm"
+# define PLYATK2 "xpm/player_attak_2.xpm"
+# define PLYATK3 "xpm/player_attak_3.xpm"
+# define PLYATK4 "xpm/player_attak_4.xpm'
+
 # define ENEMY1 "xpm/skeleton_1.xpm"
 # define ENEMY2 "xpm/skeleton_2.xpm"
 # define ENEMY3 "xpm/skeleton_3.xpm"
@@ -78,7 +83,6 @@ typedef struct	s_struct
 	t_xpm	*exit;
 	t_xpm	*enemy[4];
 	t_xpm	*player[6];
-	t_xpm	*player_run[8];
 	t_xpm	*player_attak[4];
 	t_xpm	*collectible;
 	t_xpm	*gameground;
@@ -96,13 +100,11 @@ void	moving_player(t_struct *s);
 void	counting_panel(t_struct *s, t_xpm *dest, int color);
 void	player_movements(t_struct *s);
 void	enemy_movements(t_struct *s);
-
+void	player_attak(t_struct *s);
 void	init_mowement_images(t_struct *s);
-void	player_run(t_struct *s);
 
 int	image_pixel_get(t_xpm *data, int x, int y);
 int	key_hook(int keycode, t_struct *s);
 int	put_game(t_struct *s);
-void player_attak(t_struct *s);
 
 #endif
