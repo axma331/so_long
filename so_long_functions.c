@@ -40,10 +40,7 @@ void create_gameground(t_struct *s)
 				ft_exit("Error: More player!", 1);
 			else
 				s->info.only_one_plyaer = 1;
-			if (s->info.c_flag)
-				player_attak(s);
-			else
-				player_movements(s);
+			player_movements(s);
 		}
 		else if (s->map[y][x] == 'C')
 			draw_image(s, s->gameground, s->collectible, 0);
@@ -74,6 +71,11 @@ int	key_hook(int keycode, t_struct *s)
 		s->info.horizontal = -1;
 	if (keycode == RIGHT)
 		s->info.horizontal = 1;
+	if (keycode == ESC)
+	{
+		mlx_destroy_window(s->mlx_ptr, s->win_ptr);
+		ft_exit("Win close!", 0);
+	}
 	moving_player(s);
 	return(printf("%i\n", keycode));
 }
@@ -90,3 +92,10 @@ int put_game(t_struct *s)
         mlx_do_sync(s->mlx_ptr);
 	return(0);
 }
+
+int	ft_close(int keycode, t_struct *s)
+{
+	ft_exit("Win close!", 0);
+    return (0);
+}
+

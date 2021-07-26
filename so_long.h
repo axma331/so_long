@@ -6,13 +6,14 @@
 # include <unistd.h>
 # include <stdio.h>
 
-# define SPEED 10
+# define SPEED 5
 # define COLOR 0x00099CC66
 
 # define UP		13
 # define LEFT	0
 # define RIGHT	2
 # define DOWN	1
+# define ESC	53
 
 typedef struct	s_info
 {
@@ -21,6 +22,7 @@ typedef struct	s_info
 	int	p_flag;
 	int	e_flag;
 	int	c_flag;
+	int	esc_flag;
 	int	vertical;
 	int	horizontal;
 	int	steps_cnt;
@@ -68,10 +70,10 @@ void	moving_player(t_struct *s);
 void	counting_panel(t_struct *s, t_xpm *dest, int color);
 void	player_movements(t_struct *s);
 void	enemy_movements(t_struct *s);
-void	player_attak(t_struct *s);
 
 int	image_pixel_get(t_xpm *data, int x, int y);
 int	key_hook(int keycode, t_struct *s);
 int	put_game(t_struct *s);
+int	ft_close(int keycode, t_struct *s);
 
 #endif
