@@ -8,7 +8,7 @@ void	draw_panel(t_struct *s, t_xpm *dest, int color)
 
 	x = 0;
 	y = 0;
-	if (s->i.s_cnt < 100)
+	if (s->info.s_cnt < 100)
 		l = 90;
 	else
 		l = 100;
@@ -31,12 +31,12 @@ void	draw_image(t_struct *s, t_xpm *dest, t_xpm *sorc, int color)
 	ft_bzero(&s->t, sizeof(t_temp));
 	while (s->t.t2 < s->wall->w)
 	{
+		s->t.x = s->t.t2 + s->info.x;
+		s->t.y = s->t.t1 + s->info.y;
 		if (!sorc)
-			my_mlx_pixel_put(dest, s->t.t2 + s->i.x, s->t.t1 + s->i.y, color);
+			my_mlx_pixel_put(dest, s->t.x, s->t.y, color);
 		else
 		{
-			s->t.x = s->t.t2 + s->i.x;
-			s->t.y = s->t.t1 + s->i.y;
 			clr = pixel_get(sorc, s->t.t2, s->t.t1);
 			if (clr < 0)
 				my_mlx_pixel_put(dest, s->t.x, s->t.y, COLOR);
@@ -54,30 +54,31 @@ void	draw_image(t_struct *s, t_xpm *dest, t_xpm *sorc, int color)
 
 void	draw_player(t_struct *s)
 {
-	if (s->i.c_flag)
+	if (s->info.c_flag)
 	{
-		draw_image(s, s->gameground, s->player_a[(s->i.c_flag++ - 1) / 5], 0);
-		if (s->i.c_flag == 20)
-			s->i.c_flag = 0;
+		draw_image(s, s->gameground, \
+					s->player_a[(s->info.c_flag++ - 1) / 5], 0);
+		if (s->info.c_flag == 20)
+			s->info.c_flag = 0;
 	}
 	else
 	{
-		s->i.p_flag = (s->cnt % (6 * SPEED)) / SPEED;
-		draw_image(s, s->gameground, s->player[s->i.p_flag], 0);
+		s->info.p_flag = (s->cnt % (6 * SPEED)) / SPEED;
+		draw_image(s, s->gameground, s->player[s->info.p_flag], 0);
 	}
 }
 
 void	draw_player_movements(t_struct *s)
 {
-	if (s->i.only_one_plyaer)
+	if (s->info.only_one_plyaer)
 		ft_exit("Error: More player!", 1);
 	else
-		s->i.only_one_plyaer = 1;
+		s->info.only_one_plyaer = 1;
 	draw_player(s);
 }
 
 void	draw_enemy(t_struct *s)
 {	
-	s->i.e_flag = (s->cnt % (4 * SPEED)) / SPEED;
-	draw_image(s, s->gameground, s->enemy[s->i.e_flag], 0);
+	s->info.e_flag = (s->cnt % (4 * SPEED)) / SPEED;
+	draw_image(s, s->gameground, s->enemy[s->info.e_flag], 0);
 }
