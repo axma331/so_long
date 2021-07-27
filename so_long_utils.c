@@ -23,37 +23,13 @@ void	my_mlx_pixel_put(t_xpm *data, int x, int y, int color)
 	*(unsigned int*)dst = color;
 }
 
-int	image_pixel_get(t_xpm *data, int x, int y)
+int	pixel_get(t_xpm *data, int x, int y)
 {
 	return (*(unsigned int*)(data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8))));
 }
 
-void draw_image(t_struct *s, t_xpm *dest, t_xpm *sorc, int color)
+int	ft_close(int keycode, t_struct *s)
 {
-	int x;
-	int y;
-	
-	x = 0;
-	y = 0;
-	while(x < s->wall->width)
-	{
-		if (!sorc)
-			my_mlx_pixel_put(dest, x + s->info.x, y + s->info.y, color);
-		else
-		{
-			if((image_pixel_get(sorc, x, y)) < 0)
-				my_mlx_pixel_put(dest, x + s->info.x, y + s->info.y, COLOR);
-			else
-			my_mlx_pixel_put(dest, x + s->info.x, y + s->info.y, image_pixel_get(sorc, x, y));
-		}
-		if (++x == s->wall->width && ++y)
-		{
-			if (y == s->wall->heigth)
-			{
-				y = 0;
-				break;
-			}
-			x = 0;
-		}
-	}
+	ft_exit("The window is closed!", 0);
+	return (0);
 }

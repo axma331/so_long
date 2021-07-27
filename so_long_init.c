@@ -1,6 +1,6 @@
 #include "so_long.h"
 
-void init_map(char *filmane, t_struct *s)
+void	init_map(char *filmane, t_struct *s)
 {
 	int fd;
 	char *line;
@@ -29,7 +29,7 @@ void init_map(char *filmane, t_struct *s)
 	close(fd);
 }
 
-void checking_map(t_struct *s)
+void	checking_map(t_struct *s)
 {
 	ft_bzero(&s->t, sizeof(t_temp));
 	while (s->map[s->t.t1])

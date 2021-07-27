@@ -73,17 +73,18 @@ void	init_idle_images(t_struct *s);
 void	*init_mlx_xpm_file_to_img_or_new_img(t_struct *s, char *xpm_file, int width, int height);
 void	*init_mlx_new_window(t_struct *s);
 void	draw_image(t_struct *s, t_xpm *dest, t_xpm *sorc, int color);
-void	create_gameground(t_struct *s);
+void	create_gameground(t_struct *s, int x, int y);
 void	my_mlx_pixel_put(t_xpm *data, int x, int y, int color);
 void	moving_player(t_struct *s);
-void	counting_panel(t_struct *s, t_xpm *dest, int color);
-void	player_movements(t_struct *s);
-void	enemy_movements(t_struct *s);
+void	draw_panel(t_struct *s, t_xpm *dest, int color);
+void	draw_player(t_struct *s);
+void	draw_player_movements(t_struct *s);
+void	draw_enemy(t_struct *s);
 void	checking_map(t_struct *s);
 
-int	image_pixel_get(t_xpm *data, int x, int y);
+int	pixel_get(t_xpm *data, int x, int y);
 int	key_hook(int keycode, t_struct *s);
-int	put_game(t_struct *s);
+int	create_game(t_struct *s);
 int	ft_close(int keycode, t_struct *s);
 
 #endif
