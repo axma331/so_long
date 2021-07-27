@@ -6,14 +6,14 @@
 # include <unistd.h>
 # include <stdio.h>
 
-# define SPEED 5
-# define COLOR 0x00099CC66
-
 # define UP		13
 # define LEFT	0
 # define RIGHT	2
 # define DOWN	1
 # define ESC	53
+
+# define SPEED 5
+# define COLOR 0x00099CC66
 
 typedef struct s_temp
 {
@@ -41,14 +41,6 @@ typedef struct s_info
 	int		c_cnt;
 	int		only_one_plyaer;
 }			t_info;
-/*v - vertical*/
-/*h - horizontal*/
-/*s_cnt - steps counter*/
-/*c_cnt - collectible counter*/
-/*bpp - bits_per_pixel*/
-/*ll - line_length*/
-/*w - *width*/
-/*h - heigth*/
 
 typedef struct s_xpm
 {
@@ -94,10 +86,19 @@ void	draw_player_movements(t_struct *s);
 void	draw_enemy(t_struct *s);
 void	checking_map(t_struct *s);
 void	checking_map_first_line(t_struct *s);
-
+void	pars_mapname(t_temp t, int argc, char **argv);
 int		pixel_get(t_xpm *data, int x, int y);
 int		key_hook(int keycode, t_struct *s);
 int		create_game(t_struct *s);
 int		ft_close(int keycode, t_struct *s);
+
+/*v - vertical*/
+/*h - horizontal*/
+/*s_cnt - steps counter*/
+/*c_cnt - collectible counter*/
+/*bpp - bits_per_pixel*/
+/*ll - line_length*/
+/*w - *width*/
+/*h - heigth*/
 
 #endif

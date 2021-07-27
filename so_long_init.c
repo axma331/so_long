@@ -14,7 +14,7 @@ void	init_map(char *filmane, t_struct *s)
 	{
 		s->t.ret = get_next_line(fd, &line);
 		if (s->t.ret == -1)
-			ft_exit("Error in gnl!", 1);
+			ft_exit("Error filename!", 1);
 		s->map[s->t.t1++] = line;
 		s->t.mas = s->map;
 		s->map = (char **)ft_calloc(2 + s->t.t1, sizeof(char *));

@@ -34,3 +34,20 @@ int	ft_close(int keycode, t_struct *s)
 	ft_exit("The window is closed!", 0);
 	return (0);
 }
+
+void	pars_mapname(t_temp t, int argc, char **argv)
+{
+	int		i;
+	char	*tmp;
+
+	tmp = ".bep";
+	if (argc == 2)
+	{
+		t.t1 = ft_strlen(argv[1]);
+		t.t2 = ft_strlen(tmp);
+		if ((ft_strncmp(&argv[1][t.t1 - t.t2], tmp, t.t2)))
+			ft_exit("Incorrect name map!", 1);
+	}
+	else
+		ft_exit("Incorrect arguments!", 1);
+}
