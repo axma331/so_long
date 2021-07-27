@@ -39,7 +39,7 @@ void	moving_player(t_struct *s)
 				|| s->map[s->t.t1 + s->info.v][s->t.t2 + s->info.h] == 'E')
 				ft_exit_so_long(s, "GAME OWER!", 0);
 			if (s->map[s->t.t1 + s->info.v][s->t.t2 + s->info.h] == 'C' && \
-														s->info.c_cnt++)
+														++s->info.c_cnt)
 				s->info.c_flag = 1;
 			s->map[s->t.t1][s->t.t2] = '0';
 			s->t.t1 += s->info.v;
