@@ -38,6 +38,8 @@ $(MLXLIB):
 $(OBJDIR):
 	@mkdir -p $@
 
+bonus: all
+
 re:
 	@$(MAKE) fclean
 	@$(MAKE) all
