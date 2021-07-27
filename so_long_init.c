@@ -46,7 +46,7 @@ void	checking_map(t_game *s)
 			ft_exit("Map is incorrect!", 1);
 		checking_map_first_line(s);
 	}
-	if (s->t.t1 < 3 )
+	if (s->t.t1 < 3 || !s->info.p_flag || !s->info.c_flag || !s->info.es_flag)
 		ft_exit("Map is incorrect!", 1);
 }
 
@@ -59,6 +59,12 @@ void	checking_map_first_line(t_game *s)
 		(s->map[s->t.t1][s->t.t2] == '1' && !s->map[s->t.t1][s->t.t2 + 1] && \
 		s->map[s->t.t1 - 1][s->t.t2 + 1]))
 			ft_exit("Map is incorrect!", 1);
+		if (s->map[s->t.t1][s->t.t2] == 'E')
+			s->info.es_flag = 1;
+		if (s->map[s->t.t1][s->t.t2] == 'C')
+			s->info.c_flag = 1;
+		if (s->map[s->t.t1][s->t.t2] == 'P')
+			s->info.p_flag = 1;
 		s->t.t2++;
 	}
 }

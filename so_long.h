@@ -37,7 +37,7 @@ typedef struct s_info
 	int		p_flag;
 	int		e_flag;
 	int		c_flag;
-	int		esc_flag;
+	int		es_flag;
 	int		s_cnt;
 	int		c_cnt;
 	int		only_one_plyaer;

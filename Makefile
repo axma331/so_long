@@ -2,7 +2,7 @@ NAME	= so_long
 
 CC		= gcc
 RM		= rm -rf
-ERFLG	= -g #-fsanitize=address
+ERFLG	= #-g -fsanitize=address
 CFLAGS	= $(ERFLG) -Wall -Wextra -Werror
 LIBDIR	:= libft
 LIBFT	:= -L $(LIBDIR) -lft
