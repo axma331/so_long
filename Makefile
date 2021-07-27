@@ -3,31 +3,37 @@ NAME	= so_long
 CC		= gcc
 RM		= rm -rf
 ERFLG	= -g #-fsanitize=address
-CFLAGS	= $(ERFLG) #-Wall -Wextra -Werror
-LIBFT	:= -L ../libft -lft
-HEDER	:= *.h
+CFLAGS	= $(ERFLG) -Wall -Wextra -Werror
+LIBDIR	:= libft
+LIBFT	:= -L $(LIBDIR) -lft
+HEADER	:= so_long.h
 
 MLXLIB		= mlx/libmlx.dylib
 MLXFLAGS	= $(MLXLIB) -lmlx -framework OpenGL -framework AppKit
 
-S_SRC	:= $(wildcard *.c)
+# S_SRC	:= $(wildcard *.c)
+S_SRC	:= so_long_create_game.c so_long_draw.c so_long_init.c so_long_utils.c so_long.c
 
 OBJDIR	:= .obj
 S_OBJ	:= $(S_SRC:%.c=$(OBJDIR)/%.o)
 
 all: $(NAME)
 
-$(NAME): $(S_OBJ) $(MLXLIB)
+$(NAME): $(S_OBJ) $(LIBFT)
 	@$(CC) $(LIBFT) -I $(MLXFLAGS) $(S_OBJ) -o $@
 	@echo "$(CLRCY)Подключен$(CLRPR)$(LIBFT)$(CLRRS)"
 	@echo "$(CLRCY)Подключен$(CLRPR)$(MLXLIB)$(CLRRS)"
 	@echo "$(CLRCY)Создан$(CLREL)$@$(CLRRS)"
 
-$(OBJDIR)/%.o: %.c $(OBJDIR) $(HEDER)
-	@$(MAKE) -C ../libft
-	@$(MAKE) -C ./mlx
+$(OBJDIR)/%.o: %.c $(HEADER) $(MLXLIB) | $(OBJDIR)
 	@$(CC) $(CFLAGS) -I $(MLXLIB) -c $< -o $@
-	@echo "$(CLRCY)Создан$(CLRGR)$@$(CLRRS)"make 
+	@echo "$(CLRCY)Создан$(CLRGR)$@$(CLRRS)"
+
+$(LIBFT):
+	@$(MAKE) -C $(LIBDIR)
+
+$(MLXLIB):
+	@$(MAKE) -C mlx
 
 $(OBJDIR):
 	@mkdir -p $@
@@ -37,13 +43,13 @@ re:
 	@$(MAKE) all
 
 clean:
-	@$(MAKE) clean -C ../libft
-	@$(MAKE) clean -C ./mlx
+	@$(MAKE) clean -C $(LIBDIR)
+	@$(MAKE) clean -C mlx
 	@$(RM) $(OBJDIR)
 	@echo "$(CLRCY)Очистка$(CLRRE)$(OBJDIR)$(CLRRS)"
 
 fclean: clean
-	@$(MAKE) fclean -C ../libft
+	@$(MAKE) fclean -C $(LIBDIR)
 	@$(RM) $(NAME)
 	@echo "$(CLRCY)Удаление$(CLRRE)$(NAME) $(CLRRS)"
 

@@ -86,11 +86,11 @@ void	draw_enemy(t_struct *s);
 void	checking_map(t_struct *s);
 void	checking_map_first_line(t_struct *s);
 void	pars_mapname(t_temp t, int argc, char **argv);
+void	ft_exit_so_long(t_struct *s, char *msg, int errno);
 int		pixel_get(t_xpm *data, int x, int y);
 int		key_hook(int keycode, t_struct *s);
 int		create_game(t_struct *s);
-int		ft_close(int keycode, t_struct *s);
-void	ft_exit_so_long(t_struct *s, char *msg, int errno);
+int		ft_close(void);
 
 /*v - vertical*/
 /*h - horizontal*/

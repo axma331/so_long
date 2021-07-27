@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   output_msg.c                                       :+:      :+:    :+:   */
+/*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: feschall <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 19:59:38 by feschall          #+#    #+#             */
-/*   Updated: 2021/07/16 10:58:20 by feschall         ###   ########.fr       */
+/*   Updated: 2021/07/27 20:26:04 by feschall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_exit(char *msg, int errno)
 {
-	write (STDERR_FILENO, msg, ft_strlen(msg));
-	write (STDERR_FILENO, "\n", 1);
+	write (1 + errno, msg, ft_strlen(msg));
+	write (1 + errno, "\n", 1);
 	exit (errno);
 }

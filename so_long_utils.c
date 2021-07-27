@@ -29,7 +29,7 @@ int	pixel_get(t_xpm *data, int x, int y)
 		(y * data->ll + x * (data->bpp / 8))));
 }
 
-int	ft_close(int keycode, t_struct *s)
+int	ft_close(void)
 {
 	ft_exit("The window is closed!", 0);
 	return (0);
@@ -37,10 +37,9 @@ int	ft_close(int keycode, t_struct *s)
 
 void	pars_mapname(t_temp t, int argc, char **argv)
 {
-	int		i;
 	char	*tmp;
 
-	tmp = ".bep";
+	tmp = ".ber";
 	if (argc == 2)
 	{
 		t.t1 = ft_strlen(argv[1]);
