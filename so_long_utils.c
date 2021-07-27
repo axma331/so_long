@@ -6,7 +6,7 @@ void	*init_mlx_img(t_game *s, char *xpm, int width, int height)
 
 	img = (t_xpm *)ft_calloc(1, sizeof (t_xpm));
 	if (!img)
-		ft_exit("Memory allocation failure for img!", 1);
+		ft_exit("Memory allocation failure!", 1);
 	if (!xpm)
 		img->ptr = mlx_new_image(s->mlx_ptr, width, height);
 	else
@@ -29,8 +29,19 @@ int	pixel_get(t_xpm *data, int x, int y)
 		(y * data->ll + x * (data->bpp / 8))));
 }
 
-int	ft_close(void)
+int	ft_close(t_game *s)
 {
+	ft_bzero(&s->t, sizeof(t_temp));
+	mlx_destroy_image(s->mlx_ptr, s->wall->ptr);
+	mlx_destroy_image(s->mlx_ptr, s->collectible->ptr);
+	mlx_destroy_image(s->mlx_ptr, s->exit->ptr);
+	while (s->t.t1 < 4)
+	{
+		mlx_destroy_image(s->mlx_ptr, s->enemy[s->t.t1]->ptr);
+		mlx_destroy_image(s->mlx_ptr, s->player_a[s->t.t1++]->ptr);
+	}
+	while (s->t.t2 < 6)
+		mlx_destroy_image(s->mlx_ptr, s->player[s->t.t2++]->ptr);
 	ft_exit("The window is closed!", 0);
 	return (0);
 }

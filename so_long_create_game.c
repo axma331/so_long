@@ -2,6 +2,17 @@
 
 void	ft_exit_so_long(t_game *s, char *msg, int errno)
 {
+	ft_bzero(&s->t, sizeof(t_temp));
+	mlx_destroy_image(s->mlx_ptr, s->wall->ptr);
+	mlx_destroy_image(s->mlx_ptr, s->collectible->ptr);
+	mlx_destroy_image(s->mlx_ptr, s->exit->ptr);
+	while (s->t.t1 < 4)
+	{
+		mlx_destroy_image(s->mlx_ptr, s->enemy[s->t.t1]->ptr);
+		mlx_destroy_image(s->mlx_ptr, s->player_a[s->t.t1++]->ptr);
+	}
+	while (s->t.t2 < 6)
+		mlx_destroy_image(s->mlx_ptr, s->player[s->t.t2++]->ptr);
 	mlx_destroy_window(s->mlx_ptr, s->win_ptr);
 	write (1 + errno, msg, ft_strlen(msg));
 	write (1 + errno, "\n", 1);

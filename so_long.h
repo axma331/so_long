@@ -92,7 +92,7 @@ void	ft_exit_so_long(t_game *s, char *msg, int errno);
 int		pixel_get(t_xpm *data, int x, int y);
 int		key_hook(int keycode, t_game *s);
 int		create_game(t_game *s);
-int		ft_close(void);
+int		ft_close(t_game *s);
 
 /*v - vertical*/
 /*h - horizontal*/

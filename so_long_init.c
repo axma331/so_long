@@ -11,7 +11,7 @@ void	init_map(char *filmane, t_game *s)
 	{
 		s->t.ret = get_next_line(s->t.fd, &s->t.line);
 		if (s->t.ret == -1)
-			ft_exit("Error filename!", 1);
+			ft_exit("File error!", 1);
 		if (!s->t.ret && s->t.line[0] == '\0')
 			break ;
 		s->map[s->t.t1++] = s->t.line;
