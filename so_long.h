@@ -15,6 +15,14 @@
 # define DOWN	1
 # define ESC	53
 
+typedef struct	s_temp
+{
+	char **mas;
+	int t1;
+	int t2;
+	int ret;
+}				t_temp;
+
 typedef struct	s_info
 {
 	int	x;
@@ -49,6 +57,7 @@ typedef struct	s_struct
 	int cnt;
 	int x;
 	int y;
+	t_temp	t;
 	t_info	info;
 	t_xpm	*wall;
 	t_xpm	*exit;
@@ -59,7 +68,7 @@ typedef struct	s_struct
 	t_xpm	*gameground;
 }				t_struct;
 
-void	*init_map(char *filmane);
+void	init_map(char *filmane, t_struct *s);
 void	init_idle_images(t_struct *s);
 void	*init_mlx_xpm_file_to_img_or_new_img(t_struct *s, char *xpm_file, int width, int height);
 void	*init_mlx_new_window(t_struct *s);
@@ -70,6 +79,7 @@ void	moving_player(t_struct *s);
 void	counting_panel(t_struct *s, t_xpm *dest, int color);
 void	player_movements(t_struct *s);
 void	enemy_movements(t_struct *s);
+void	checking_map(t_struct *s);
 
 int	image_pixel_get(t_xpm *data, int x, int y);
 int	key_hook(int keycode, t_struct *s);

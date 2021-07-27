@@ -6,7 +6,7 @@ void	*init_mlx_xpm_file_to_img_or_new_img(t_struct *s, char *xpm_file, int width
 
 	img = (t_xpm *)ft_calloc(1, sizeof (t_xpm));
 	if (!img)
-		ft_exit("memerr", 1);
+		ft_exit("Memory allocation failure for img!", 1);
 	if (!xpm_file)
 		img->ptr = mlx_new_image(s->mlx_ptr, width, height);
 	else
@@ -56,6 +56,4 @@ void draw_image(t_struct *s, t_xpm *dest, t_xpm *sorc, int color)
 			x = 0;
 		}
 	}
-	// if (x == s->wall->width)
-	// 	s->info.x += s->wall->width;
 }

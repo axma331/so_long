@@ -1,37 +1,60 @@
 #include "so_long.h"
 
-void *init_map(char *filmane)
+void init_map(char *filmane, t_struct *s)
 {
 	int fd;
 	char *line;
-    char **map;
-	char **tmp;
-	int ret;
-	int i;
-	int j;
 
-	map = (char **)ft_calloc(2, sizeof(char *));
-	if (!map)
-		exit (1);
-	ret = 1;
-	i = 0;
+	s->map = (char **)ft_calloc(2, sizeof(char *));
+	if (!s->map)
+		ft_exit("Memory allocation failure!", 1);
+	s->t.ret = 1;
 	fd = open(filmane, O_RDONLY);
-	while (ret != 0)
+	while (s->t.ret != 0)
 	{
-		ret = get_next_line(fd, &line);
-		if (ret == -1)
+		s->t.ret = get_next_line(fd, &line);
+		if (s->t.ret == -1)
+			ft_exit("Error in gnl!", 1);
+		s->map[s->t.t1++] = line;
+		s->t.mas = s->map;
+		s->map = (char **)ft_calloc(2 + s->t.t1, sizeof(char *));
+		if (!s->map)
 			exit (1);
-		map[i++] = line;
-		tmp = map;
-		map = (char **)ft_calloc(2 + i, sizeof(char *));
-		if (!map)
-			exit (1);
-		j = -1;
-		while(tmp[++j])
-			map[j] = tmp[j];
-		free(tmp);
+		s->t.t2 = -1;
+		while(s->t.mas[++s->t.t2])
+			s->map[s->t.t2] = s->t.mas[s->t.t2];
+		free(s->t.mas);
 	}
-    return(map);
+	checking_map(s);
+	close(fd);
+}
+
+void checking_map(t_struct *s)
+{
+	ft_bzero(&s->t, sizeof(t_temp));
+	while (s->map[s->t.t1])
+	{
+		if (!s->map[s->t.t1][s->t.t2 - 1])
+			while (s->map[s->t.t1][s->t.t2] == '1')
+				s->t.t2++;
+		if (!s->map[s->t.t1][s->t.t2] && ++s->t.t1)
+		{
+			if (s->t.t2 < 4)
+				ft_exit("Map is incorrect!", 1);
+			s->t.t2 = 0;
+		}
+		else
+			ft_exit("Map is incorrect!", 1);
+		while (s->map[s->t.t1] && s->map[s->t.t1][s->t.t2] && s->map[s->t.t1 - 1][s->t.t2])
+		{
+			if ((s->map[s->t.t1][s->t.t2] != '1' && (!s->map[s->t.t1 + 1] || !s->map[s->t.t1][s->t.t2 - 1] ||\
+			!s->map[s->t.t1][s->t.t2 + 1])) || (s->map[s->t.t1][s->t.t2] == '1' && !s->map[s->t.t1][s->t.t2 + 1] && s->map[s->t.t1 - 1][s->t.t2 + 1]))
+				ft_exit("Map is incorrect!", 1);
+			s->t.t2++;
+		}
+	}
+	if (s->t.t1 < 4 )
+		ft_exit("Map is incorrect!", 1);
 }
 
 void	init_idle_images(t_struct *s)
@@ -57,16 +80,14 @@ void	init_idle_images(t_struct *s)
 
 void	*init_mlx_new_window(t_struct *s)
 {
-	int x_cnt;
-
-	x_cnt = 0;
+	ft_bzero(&s->t, sizeof(t_temp));
 	while (s->map[s->y])
 	{
-		if (s->map[s->y][x_cnt++])
-			if (x_cnt > s->x)
-				s->x = x_cnt;
-		if (!s->map[s->y][x_cnt] && ++s->y)
-			x_cnt = 0;
+		if (s->map[s->y][s->t.t1++])
+			if (s->t.t1 > s->x)
+				s->x = s->t.t1;
+		if (!s->map[s->y][s->t.t1] && ++s->y)
+			s->t.t1 = 0;
 	}
 	s->x *= s->wall->width;
 	s->y *= s->wall->heigth;

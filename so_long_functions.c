@@ -57,7 +57,7 @@ void create_gameground(t_struct *s)
 		}
 	}
 	s->cnt++;
-    s->info.y = 0;
+	s->info.y = 0;
 	s->info.only_one_plyaer = 0;
 }
 
@@ -82,20 +82,20 @@ int	key_hook(int keycode, t_struct *s)
 
 int put_game(t_struct *s)
 {
-        create_gameground(s);
-        counting_panel(s, s->gameground, 0x00666699);
-        mlx_put_image_to_window(s->mlx_ptr, s->win_ptr, s->gameground->ptr, 0, 0);
-        mlx_string_put(s->mlx_ptr, s->win_ptr, 0, 0, 0x0033CCFF, "Steps:");
-        mlx_string_put(s->mlx_ptr, s->win_ptr, 0, 20, 0x0033CCFF, "Items:");
-        mlx_string_put(s->mlx_ptr, s->win_ptr, 70, 0, 0x0033CCFF, ft_itoa(s->info.steps_cnt));
-        mlx_string_put(s->mlx_ptr, s->win_ptr, 70, 20, 0x0033CCFF, ft_itoa(s->info.collectible_cnt));
-        mlx_do_sync(s->mlx_ptr);
+		create_gameground(s);
+		counting_panel(s, s->gameground, 0x00666699);
+		mlx_put_image_to_window(s->mlx_ptr, s->win_ptr, s->gameground->ptr, 0, 0);
+		mlx_string_put(s->mlx_ptr, s->win_ptr, 0, 0, 0x0033CCFF, "Steps:");
+		mlx_string_put(s->mlx_ptr, s->win_ptr, 0, 20, 0x0033CCFF, "Items:");
+		mlx_string_put(s->mlx_ptr, s->win_ptr, 70, 0, 0x0033CCFF, ft_itoa(s->info.steps_cnt));
+		mlx_string_put(s->mlx_ptr, s->win_ptr, 70, 20, 0x0033CCFF, ft_itoa(s->info.collectible_cnt));
+		mlx_do_sync(s->mlx_ptr);
 	return(0);
 }
 
 int	ft_close(int keycode, t_struct *s)
 {
 	ft_exit("Win close!", 0);
-    return (0);
+	return (0);
 }
 
