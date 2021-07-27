@@ -2,9 +2,9 @@
 
 int	main(int argc, char **argv)
 {
-	t_struct	s;
+	t_game	s;
 
-	ft_bzero(&s, sizeof(t_struct));
+	ft_bzero(&s, sizeof(t_game));
 	pars_mapname(s.t, argc, argv);
 	init_map(argv[1], &s);
 	s.mlx_ptr = mlx_init();

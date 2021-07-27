@@ -1,8 +1,8 @@
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
-# include "./libft/libft.h"
-# include "./mlx/mlx.h"
+# include "libft.h"
+# include "mlx/mlx.h"
 # include <unistd.h>
 
 # define UP		13
@@ -17,12 +17,14 @@
 typedef struct s_temp
 {
 	char	**mas;
+	char	*line;
 	char	*steps;
 	char	*collect;
 	int		t1;
 	int		t2;
 	int		x;
 	int		y;
+	int		fd;
 	int		ret;
 }			t_temp;
 
@@ -52,7 +54,7 @@ typedef struct s_xpm
 	int		h;
 }			t_xpm;
 
-typedef struct s_struct
+typedef struct s_game
 {
 	char	**map;
 	void	*mlx_ptr;
@@ -69,27 +71,27 @@ typedef struct s_struct
 	t_xpm	*player_a[4];
 	t_xpm	*collectible;
 	t_xpm	*gameground;
-}			t_struct;
+}			t_game;
 
-void	init_map(char *filmane, t_struct *s);
-void	init_idle_images(t_struct *s);
-void	*init_mlx_img(t_struct *s, char *xpm_file, int width, int height);
-void	*init_mlx_new_window(t_struct *s);
-void	draw_image(t_struct *s, t_xpm *dest, t_xpm *sorc, int color);
-void	create_gameground(t_struct *s, int x, int y);
+void	init_map(char *filmane, t_game *s);
+void	init_idle_images(t_game *s);
+void	*init_mlx_img(t_game *s, char *xpm_file, int width, int height);
+void	*init_mlx_new_window(t_game *s);
+void	draw_image(t_game *s, t_xpm *dest, t_xpm *sorc, int color);
+void	create_gameground(t_game *s, int x, int y);
 void	my_mlx_pixel_put(t_xpm *data, int x, int y, int color);
-void	moving_player(t_struct *s);
-void	draw_panel(t_struct *s, t_xpm *dest, int color);
-void	draw_player(t_struct *s);
-void	draw_player_movements(t_struct *s);
-void	draw_enemy(t_struct *s);
-void	checking_map(t_struct *s);
-void	checking_map_first_line(t_struct *s);
+void	moving_player(t_game *s);
+void	draw_panel(t_game *s, t_xpm *dest, int color);
+void	draw_player(t_game *s);
+void	draw_player_movements(t_game *s);
+void	draw_enemy(t_game *s);
+void	checking_map(t_game *s);
+void	checking_map_first_line(t_game *s);
 void	pars_mapname(t_temp t, int argc, char **argv);
-void	ft_exit_so_long(t_struct *s, char *msg, int errno);
+void	ft_exit_so_long(t_game *s, char *msg, int errno);
 int		pixel_get(t_xpm *data, int x, int y);
-int		key_hook(int keycode, t_struct *s);
-int		create_game(t_struct *s);
+int		key_hook(int keycode, t_game *s);
+int		create_game(t_game *s);
 int		ft_close(void);
 
 /*v - vertical*/

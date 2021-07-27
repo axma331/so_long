@@ -1,6 +1,6 @@
 #include "so_long.h"
 
-void	*init_mlx_img(t_struct *s, char *xpm, int width, int height)
+void	*init_mlx_img(t_game *s, char *xpm, int width, int height)
 {
 	t_xpm	*img;
 

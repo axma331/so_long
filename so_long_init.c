@@ -1,35 +1,34 @@
 #include "so_long.h"
 
-void	init_map(char *filmane, t_struct *s)
+void	init_map(char *filmane, t_game *s)
 {
-	int		fd;
-	char	*line;
-
 	s->map = (char **)ft_calloc(2, sizeof(char *));
 	if (!s->map)
 		ft_exit("Memory allocation failure!", 1);
 	s->t.ret = 1;
-	fd = open(filmane, O_RDONLY);
+	s->t.fd = open(filmane, O_RDONLY);
 	while (s->t.ret != 0)
 	{
-		s->t.ret = get_next_line(fd, &line);
+		s->t.ret = get_next_line(s->t.fd, &s->t.line);
 		if (s->t.ret == -1)
 			ft_exit("Error filename!", 1);
-		s->map[s->t.t1++] = line;
+		if (!s->t.ret && s->t.line[0] == '\0')
+			break ;
+		s->map[s->t.t1++] = s->t.line;
 		s->t.mas = s->map;
 		s->map = (char **)ft_calloc(2 + s->t.t1, sizeof(char *));
 		if (!s->map)
-			exit (1);
+			ft_exit("Memory allocation failure!", 1);
 		s->t.t2 = -1;
 		while (s->t.mas[++s->t.t2])
 			s->map[s->t.t2] = s->t.mas[s->t.t2];
 		free(s->t.mas);
 	}
 	checking_map(s);
-	close(fd);
+	close(s->t.fd);
 }
 
-void	checking_map(t_struct *s)
+void	checking_map(t_game *s)
 {
 	ft_bzero(&s->t, sizeof(t_temp));
 	while (s->map[s->t.t1])
@@ -39,7 +38,7 @@ void	checking_map(t_struct *s)
 				s->t.t2++;
 		if (!s->map[s->t.t1][s->t.t2] && ++s->t.t1)
 		{
-			if (s->t.t2 < 4)
+			if (s->t.t2 < 3)
 				ft_exit("Map is incorrect!", 1);
 			s->t.t2 = 0;
 		}
@@ -47,11 +46,11 @@ void	checking_map(t_struct *s)
 			ft_exit("Map is incorrect!", 1);
 		checking_map_first_line(s);
 	}
-	if (s->t.t1 < 4 )
+	if (s->t.t1 < 3 )
 		ft_exit("Map is incorrect!", 1);
 }
 
-void	checking_map_first_line(t_struct *s)
+void	checking_map_first_line(t_game *s)
 {
 	while (s->map[s->t.t1] && s->map[s->t.t1 - 1][s->t.t2])
 	{
@@ -64,7 +63,7 @@ void	checking_map_first_line(t_struct *s)
 	}
 }
 
-void	init_idle_images(t_struct *s)
+void	init_idle_images(t_game *s)
 {
 	s->wall = init_mlx_img(s, "xpm/tree.xpm", 0, 0);
 	s->collectible = init_mlx_img(s, "xpm/collectible.xpm", 0, 0);
@@ -85,7 +84,7 @@ void	init_idle_images(t_struct *s)
 	s->player_a[3] = init_mlx_img(s, "xpm/player_attak_4.xpm", 0, 0);
 }
 
-void	*init_mlx_new_window(t_struct *s)
+void	*init_mlx_new_window(t_game *s)
 {
 	ft_bzero(&s->t, sizeof(t_temp));
 	while (s->map[s->y])

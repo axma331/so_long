@@ -1,6 +1,6 @@
 #include "so_long.h"
 
-void	draw_panel(t_struct *s, t_xpm *dest, int color)
+void	draw_panel(t_game *s, t_xpm *dest, int color)
 {
 	int	x;
 	int	y;
@@ -24,7 +24,7 @@ void	draw_panel(t_struct *s, t_xpm *dest, int color)
 	}
 }
 
-void	draw_image(t_struct *s, t_xpm *dest, t_xpm *sorc, int color)
+void	draw_image(t_game *s, t_xpm *dest, t_xpm *sorc, int color)
 {
 	int	clr;
 
@@ -52,7 +52,7 @@ void	draw_image(t_struct *s, t_xpm *dest, t_xpm *sorc, int color)
 	}
 }
 
-void	draw_player(t_struct *s)
+void	draw_player(t_game *s)
 {
 	if (s->info.c_flag)
 	{
@@ -68,7 +68,7 @@ void	draw_player(t_struct *s)
 	}
 }
 
-void	draw_player_movements(t_struct *s)
+void	draw_player_movements(t_game *s)
 {
 	if (s->info.only_one_plyaer)
 		ft_exit_so_long(s, "Error: a lot of players!", 0);
@@ -77,7 +77,7 @@ void	draw_player_movements(t_struct *s)
 	draw_player(s);
 }
 
-void	draw_enemy(t_struct *s)
+void	draw_enemy(t_game *s)
 {	
 	s->info.e_flag = (s->cnt % (4 * SPEED)) / SPEED;
 	draw_image(s, s->gameground, s->enemy[s->info.e_flag], 0);

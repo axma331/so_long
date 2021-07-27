@@ -19,14 +19,14 @@ S_OBJ	:= $(S_SRC:%.c=$(OBJDIR)/%.o)
 
 all: $(NAME)
 
-$(NAME): $(S_OBJ) $(LIBFT)
+$(NAME): $(S_OBJ) $(LIBFT) $(MLXLIB)
 	@$(CC) $(LIBFT) -I $(MLXFLAGS) $(S_OBJ) -o $@
 	@echo "$(CLRCY)Подключен$(CLRPR)$(LIBFT)$(CLRRS)"
 	@echo "$(CLRCY)Подключен$(CLRPR)$(MLXLIB)$(CLRRS)"
 	@echo "$(CLRCY)Создан$(CLREL)$@$(CLRRS)"
 
-$(OBJDIR)/%.o: %.c $(HEADER) $(MLXLIB) | $(OBJDIR)
-	@$(CC) $(CFLAGS) -I $(MLXLIB) -c $< -o $@
+$(OBJDIR)/%.o: %.c $(HEADER) | $(OBJDIR)
+	@$(CC) $(CFLAGS) -I $(LIBDIR) -c $< -o $@
 	@echo "$(CLRCY)Создан$(CLRGR)$@$(CLRRS)"
 
 $(LIBFT):
