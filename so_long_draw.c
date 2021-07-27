@@ -71,7 +71,7 @@ void	draw_player(t_struct *s)
 void	draw_player_movements(t_struct *s)
 {
 	if (s->info.only_one_plyaer)
-		ft_exit("Error: More player!", 1);
+		ft_exit_so_long(s, "Error: a lot of players!", 0);
 	else
 		s->info.only_one_plyaer = 1;
 	draw_player(s);

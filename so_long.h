@@ -90,6 +90,7 @@ int		pixel_get(t_xpm *data, int x, int y);
 int		key_hook(int keycode, t_struct *s);
 int		create_game(t_struct *s);
 int		ft_close(int keycode, t_struct *s);
+void	ft_exit_so_long(t_struct *s, char *msg, int errno);
 
 /*v - vertical*/
 /*h - horizontal*/

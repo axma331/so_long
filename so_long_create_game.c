@@ -1,5 +1,13 @@
 #include "so_long.h"
 
+void	ft_exit_so_long(t_struct *s, char *msg, int errno)
+{
+	mlx_destroy_window(s->mlx_ptr, s->win_ptr);
+	write (STDERR_FILENO, msg, ft_strlen(msg));
+	write (STDERR_FILENO, "\n", 1);
+	exit (errno);
+}
+
 int	key_hook(int keycode, t_struct *s)
 {
 	if (keycode == UP)
@@ -11,10 +19,7 @@ int	key_hook(int keycode, t_struct *s)
 	if (keycode == RIGHT)
 		s->info.h = 1;
 	if (keycode == ESC)
-	{
-		mlx_destroy_window(s->mlx_ptr, s->win_ptr);
-		ft_exit("The window is closed!", 0);
-	}
+		ft_exit_so_long(s, "The window is closed!", 0);
 	ft_bzero(&s->t, sizeof(t_temp));
 	moving_player(s);
 	s->info.v = 0;
@@ -32,7 +37,7 @@ void	moving_player(t_struct *s)
 		{				
 			if (s->map[s->t.t1 + s->info.v][s->t.t2 + s->info.h] == 'K'\
 				|| s->map[s->t.t1 + s->info.v][s->t.t2 + s->info.h] == 'E')
-				ft_exit("GAME OWER!", 0);
+				ft_exit_so_long(s, "GAME OWER!", 0);
 			if (s->map[s->t.t1 + s->info.v][s->t.t2 + s->info.h] == 'C' && \
 														s->info.c_cnt++)
 				s->info.c_flag = 1;
