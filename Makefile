@@ -24,39 +24,34 @@ all:  			libft_make $(NAME)
 
 $(NAME): 		$(OBJC) $(MLXLIB) Makefile
 				@$(CC) $(LIBFT) -I $(MLXFLAGS) $(OBJC) -o $@
-				@echo "$(CLRCY)Создан$(CLREL)$@$(CLRRS)"
+				@echo "$(CLRCY)Создан$(CLRPR)$@$(CLRRS)"
 
-$(OBJ_DIR)/%.o:	%.c $(HEADER) $(LIBFT) | $(OBJ_DIR)
-				$(CC) $(CFLAGS) -I $(LIBFT_DIR) -c $< -o $@
+$(OBJ_DIR)/%.o:	%.c $(LIBFT) $(HEADER)  | $(OBJ_DIR)
+				@$(CC) $(CFLAGS) -I $(LIBFT_DIR) -c $< -o $@
 				@echo "$(CLRCY)Создан$(CLRGR)$@$(CLRRS)"
 
 $(OBJ_DIR):
-				mkdir -p $@
+				@mkdir -p $@
 
 $(MLXLIB):
-				make -sC $(MLX_DIR)
-				@echo "$(CLRCY)Подключен$(CLRPR)$(MLXLIB)$(CLRRS)"
-
-$(LIBFT):
-				make -C $(LIBFT_DIR)
-				@echo "$(CLRCY)Подключен$(CLRPR)$(LIBFT)$(CLRRS)"
+				@make -sC $(MLX_DIR)
 
 bonus:			all
 
 re:
-				make fclean
-				make all
+				@make fclean
+				@make all
 
 clean:
-				-make clean -C $(LIBFT_DIR)
-				make clean -C mlx
-				$(RM) $(OBJ_DIR)
+				@-make clean -C $(LIBFT_DIR)
+				@make clean -C mlx
+				@$(RM) $(OBJ_DIR)
 				@echo "$(CLRCY)Очистка$(CLRRE)$(OBJ_DIR)$(CLRRS)"
 
 fclean: clean
-				-make fclean -C $(LIBFT_DIR)
-				$(RM) $(NAME)
-				$(RM) $(LIBFT_DIR)
+				@-make fclean -C $(LIBFT_DIR)
+				@$(RM) $(NAME)
+				@$(RM) $(LIBFT_DIR)
 				@echo "$(CLRCY)Удаление$(CLRRE)$(NAME) $(CLRRS)"
 
 libft_make:
