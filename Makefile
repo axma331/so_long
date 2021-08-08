@@ -1,58 +1,66 @@
-NAME	= so_long
+NAME		= so_long
 
-CC		= gcc
-RM		= rm -rf
-ERFLG	= #-g -fsanitize=address
-CFLAGS	= $(ERFLG) -Wall -Wextra -Werror
-LIBDIR	:= libft
-LIBFT	:= -L $(LIBDIR) -lft
-HEADER	:= so_long.h
+CC			:= gcc
+RM			:= rm -rf
+CFLAGS		:= -Wall -Wextra -Werror -O2 #-g -fsanitize=address
 
-MLXLIB		= mlx/libmlx.dylib
+LIBFT_GIT	:= https://github.com/axma331/libft.git
+
+LIBFT_DIR	= libft
+LIBFT		= $(LIBFT_DIR)/libft.a
+HEADER		:= so_long.h
+
+MLX_DIR		= mlx
+MLXLIB		= $(MLX_DIR)/libmlx.dylib
 MLXFLAGS	= $(MLXLIB) -lmlx -framework OpenGL -framework AppKit
+
+INCLUDES	=	-I $(LIBFT_DIR) -I $(MLX_DIR)
 
 # S_SRC	:= $(wildcard *.c)
 S_SRC	:= so_long_create_game.c so_long_draw.c so_long_init.c so_long_utils.c so_long.c
 
-OBJDIR	:= .obj
-S_OBJ	:= $(S_SRC:%.c=$(OBJDIR)/%.o)
+OBJ_DIR		:= .obj
+OBJ			:= $(S_SRC:%.c=$(OBJ_DIR)/%.o)
 
 all: $(NAME)
 
-$(NAME): $(S_OBJ) $(LIBFT) $(MLXLIB)
-	@$(CC) $(LIBFT) -I $(MLXFLAGS) $(S_OBJ) -o $@
-	@echo "$(CLRCY)Подключен$(CLRPR)$(LIBFT)$(CLRRS)"
-	@echo "$(CLRCY)Подключен$(CLRPR)$(MLXLIB)$(CLRRS)"
-	@echo "$(CLRCY)Создан$(CLREL)$@$(CLRRS)"
+$(NAME):  $(MLXLIB) $(OBJ)  Makefile 
+	$(CC) $(LIBFT) -I $(MLXFLAGS) $(OBJ) -o $@
+# @echo "$(CLRCY)Подключен$(CLRPR)$(LIBFT)$(CLRRS)"
+# @echo "$(CLRCY)Подключен$(CLRPR)$(MLXLIB)$(CLRRS)"
+# @echo "$(CLRCY)Создан$(CLREL)$@$(CLRRS)"
 
-$(OBJDIR)/%.o: %.c $(HEADER) | $(OBJDIR)
-	@$(CC) $(CFLAGS) -I $(LIBDIR) -c $< -o $@
-	@echo "$(CLRCY)Создан$(CLRGR)$@$(CLRRS)"
+$(OBJ_DIR)/%.o: %.c $(HEADER) $(OBJ_DIR) | $(LIBFT)
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+# @echo "$(CLRCY)Создан$(CLRGR)$@$(CLRRS)"
 
-$(LIBFT):
-	@$(MAKE) -C $(LIBDIR)
+$(LIB_FILE): $(LIBFT_DIR)/*.h $(LIBFT_DIR)/*.c
 
-$(MLXLIB):
-	@$(MAKE) -C mlx
+$(LIBFT): $(LIB_FILE)
+	make -C $(LIBFT_DIR) || { git clone $(LIBFT_GIT); make -C $(LIBFT_DIR); }
 
-$(OBJDIR):
-	@mkdir -p $@
+$(MLXLIB): 
+	make -C $(MLX_DIR)
+
+$(OBJ_DIR): 
+	mkdir -p $@
 
 bonus: all
 
 re:
-	@$(MAKE) fclean
-	@$(MAKE) all
+	make fclean
+	make all
 
 clean:
-	@$(MAKE) clean -C $(LIBDIR)
-	@$(MAKE) clean -C mlx
-	@$(RM) $(OBJDIR)
-	@echo "$(CLRCY)Очистка$(CLRRE)$(OBJDIR)$(CLRRS)"
+	-make clean -C $(LIBFT_DIR)
+	make clean -C mlx
+	$(RM) $(OBJ_DIR)
+	@echo "$(CLRCY)Очистка$(CLRRE)$(OBJ_DIR)$(CLRRS)"
 
 fclean: clean
-	@$(MAKE) fclean -C $(LIBDIR)
-	@$(RM) $(NAME)
+	-make fclean -C $(LIBFT_DIR)
+	$(RM) $(NAME)
+	$(RM) $(LIBFT_DIR)
 	@echo "$(CLRCY)Удаление$(CLRRE)$(NAME) $(CLRRS)"
 
 gitpush: fclean
@@ -61,7 +69,7 @@ gitpush: fclean
 	git commit -m "New edition"
 	git push
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re libft_make
 
 
 

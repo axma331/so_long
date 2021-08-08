@@ -2,7 +2,7 @@
 # define SO_LONG_H
 
 # include "libft.h"
-# include "mlx/mlx.h"
+# include "mlx.h"
 # include <unistd.h>
 
 # define UP		13
