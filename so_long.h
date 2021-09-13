@@ -103,4 +103,5 @@ int		ft_close(t_game *s);
 /*w - *width*/
 /*h - heigth*/
 
+
 #endif
